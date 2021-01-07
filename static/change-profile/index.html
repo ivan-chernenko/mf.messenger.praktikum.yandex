@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактор профиля</title>
+    <link rel="stylesheet" href="../common/styles/back-section.css">
+    <link rel="stylesheet" href="../common/styles/body.css">
+    <link rel="stylesheet" href="../common/styles/input.css">
+    <link rel="stylesheet" href="../common/styles/content.css">
+    <link rel="stylesheet" href="../common/styles/avatar.css">
+    <link rel="stylesheet" href="../common/styles/button.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <main class="content">
+        <div class="back-section">
+            <a
+                    class="back-section__button"
+                    href="/"
+            >
+            </a>
+        </div>
+        <form class="change-profile-form">
+            <div class="avatar change-profile-form__avatar">
+            </div>
+            <label class="input change-profile-form__input">
+                Почта
+                <input
+                        type="email"
+                        value="name@example.com"
+                        placeholder="Почта"
+                        class="input__input"
+                />
+            </label>
+            <label class="input change-profile-form__input">
+                Имя
+                <input
+                        value="Иван"
+                        placeholder="Имя"
+                        class="input__input"
+                />
+            </label>
+            <label class="input change-profile-form__input">
+                Фамилия
+                <input
+                        value="Черненко"
+                        placeholder="Фамилия"
+                        class="input__input"
+                />
+            </label>
+            <label class="input change-profile-form__input">
+                Логин
+                <input
+                        value="ivan123"
+                        placeholder="Логин"
+                        class="input__input"
+                />
+            </label>
+            <label class="input change-profile-form__input">
+                Отображаемое имя
+                <input
+                        class="input__input"
+                        placeholder="Отображаемое имя"
+                        value="ivan"
+                />
+            </label>
+            <label class="input change-profile-form__input">
+                Телефон
+                <input
+                        type="tel"
+                        class="input__input"
+                        placeholder="Телефон"
+                        value="+7 (915) 265 64 05"
+                />
+            </label>
+            <button
+                    class="button change-profile-form__button"
+                    type="submit"
+            >
+                Сохранить
+            </button>
+        </form>
+    </main>
+    <script src="../common/scripts/input-label.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

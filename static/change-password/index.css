@@ -1,0 +1,23 @@
+.change-password-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(100vw - 74px);
+}
+
+.change-password-form__avatar {
+    margin-top: 48px;
+}
+
+.change-password-form__input {
+    margin-top: 28px;
+    width: 400px;
+}
+
+.change-password-form__input:first-child {
+    margin-top: 48px;
+}
+
+.change-password-form__button {
+    margin-top: 28px;
+}
