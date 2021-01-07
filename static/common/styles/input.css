@@ -1,9 +1,14 @@
 .input {
     color: white;
     display: flex;
+    position: relative;
     flex-direction: column;
     width: 280px;
     font-size: 12px;
+}
+
+.input_type_search {
+    width: 186px;
 }
 
 .input__input {
@@ -15,4 +20,22 @@
     font-size: 16px;
     background: #1F2023;
     border-bottom: 1px solid #5E6AD2;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.input__input_type_search {
+    border: 1px solid #5E6AD2;
+    border-radius: 5px;
+    padding-left: 28px;
+}
+
+.input__search-icon {
+    background: url("../../icons/search.svg");
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 40px;
+    top: 2px;
 }
