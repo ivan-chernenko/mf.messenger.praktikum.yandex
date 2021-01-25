@@ -1,0 +1,1 @@
+export {shallowEquals} from 'shadow-equal';
