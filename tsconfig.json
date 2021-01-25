@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["es5", "es2015.promise", "dom", "es2015"],
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "Node",
+        "allowSyntheticDefaultImports": true,
+        "declaration": false,
+        "sourceMap": true,
+        "module": "ESNext"
+    },
+    "include": ["src/**/*"],
+    "outFile": "static/client/index.js",
+    "outDir": "static"
+}
