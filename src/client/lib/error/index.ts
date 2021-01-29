@@ -1,0 +1,1 @@
+export {throwIfMoreThen} from './throwIfMoreThen';
