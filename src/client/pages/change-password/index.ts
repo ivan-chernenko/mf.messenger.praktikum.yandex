@@ -5,6 +5,7 @@ import {render} from '../../lib/render/index.js';
 import {Button} from '../../components/button/index.js';
 import {Input} from '../../components/input/index.js';
 import {hideLabelIfEmpty} from '../../lib/input-labels/index.js';
+import {getValidationByInputName, initValidateInputs} from "../../lib/validating";
 
 export class ChangePasswordPage extends Component<ChangePasswordProps> {
     constructor() {
@@ -24,14 +25,14 @@ export class ChangePasswordPage extends Component<ChangePasswordProps> {
             oldPassword: new Input({
                 title: 'Старый пароль',
                 placeholder: 'Старый пароль',
-                name: 'oldPassword',
+                name: 'password',
                 type: 'password',
                 labelClassName: 'change-password-form__input',
                 inputClassName: '',
             }),
             repeatPassword: new Input({
                 title: 'Новый пароль еще раз',
-                name: 'repeatPassword',
+                name: 'repeatNewPassword',
                 placeholder: 'Новый пароль еще раз',
                 type: 'password',
                 labelClassName: 'change-password-form__input',
@@ -40,44 +41,16 @@ export class ChangePasswordPage extends Component<ChangePasswordProps> {
         });
     }
 
-    initValidate() {
-        const inputs: NodeListOf<HTMLInputElement> = this.element.querySelectorAll('.input__input');
-        if (inputs.length < 3)
-            return;
-        const [oldPassword, newPassword, repeatPassword] = Array.from(inputs);
-        oldPassword.onblur = () => {
-            if (!oldPassword.value || oldPassword.value !== '123123')
-                oldPassword.classList.add('input__input_hasError');
-        };
-        oldPassword.onfocus = () => oldPassword.classList.remove('input__input_hasError');
-
-        newPassword.onblur = () => {
-            if (!newPassword.value)
-                newPassword.classList.add('input__input_hasError');
-        };
-        newPassword.onfocus = () => newPassword.classList.remove('input__input_hasError');
-
-        repeatPassword.onblur = () => {
-            if (!repeatPassword.value || repeatPassword.value !== newPassword.value)
-                repeatPassword.classList.add('input__input_hasError');
-        };
-        repeatPassword.onfocus = () => repeatPassword.classList.remove('input__input_hasError');
-
-        const button = this.element.querySelector('button');
-        if (button)
-            button.onclick = e => {
-                e.preventDefault();
-                if (!repeatPassword.value || repeatPassword.value !== newPassword.value)
-                    repeatPassword.classList.add('input__input_hasError');
-                if (!newPassword.value)
-                    newPassword.classList.add('input__input_hasError');
-                if (!oldPassword.value || oldPassword.value !== '123123')
-                    oldPassword.classList.add('input__input_hasError');
-            }
-    }
-
     componentDidMount() {
-        this.initValidate();
+        initValidateInputs(this.element);
+        const button = this.element.querySelector('button');
+        if (button) {
+            button.addEventListener('click', e => {
+                e.preventDefault();
+                const inputs: NodeListOf<HTMLInputElement> = this.element.querySelectorAll('.input__input');
+                inputs.forEach(input => getValidationByInputName(input)())
+            })
+        }
         hideLabelIfEmpty(this.element);
     }
 

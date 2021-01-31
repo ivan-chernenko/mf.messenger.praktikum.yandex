@@ -80,10 +80,7 @@ export abstract class Component<T> {
 
     private _render = () => {
         this.element.insertAdjacentHTML("afterbegin", this.render());
-        this.eventBus.emit(EVENTS.FLOW_CDR);
     };
-
-
 
     render(): string {
         return '';
