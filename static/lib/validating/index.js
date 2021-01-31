@@ -1,0 +1,2 @@
+export { validateEmail, validateValueExist, validatePassword, validateRepeatPassword, getValidationByInputName, initValidateInputs, validatePhone } from './validate.js';
+//# sourceMappingURL=index.js.map
