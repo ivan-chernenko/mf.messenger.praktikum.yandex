@@ -5,6 +5,7 @@ import {template} from './template.js';
 import {LoginPageProps} from './types.js';
 import {render} from '../../lib/render/index.js';
 import {hideLabelIfEmpty} from '../../lib/input-labels/index.js';
+import {getValidationByInputName, initValidateInputs} from "../../lib/validating";
 
 export class LoginPage extends Component<LoginPageProps> {
     constructor() {
@@ -32,36 +33,16 @@ export class LoginPage extends Component<LoginPageProps> {
         });
     }
 
-    initValidate() {
-        const inputs: NodeListOf<HTMLInputElement> = this.element.querySelectorAll('.input__input');
-        if (inputs.length < 2)
-            return;
-        const [login, password] = Array.from(inputs);
-        login.onblur = () => {
-            if (!login.value)
-                login.classList.add('input__input_hasError');
-        };
-        login.onfocus = () => login.classList.remove('input__input_hasError');
-
-        password.onblur = () => {
-            if (!password.value || password.value !== '123123')
-                login.classList.add('input__input_hasError');
-        };
-        password.onfocus = () => login.classList.remove('input__input_hasError');
-
-        const button = this.element.querySelector('button');
-        if (button)
-            button.onclick = e => {
-                e.preventDefault();
-                if (!password.value || password.value !== '123123')
-                    login.classList.add('input__input_hasError');
-                if (!login.value)
-                    login.classList.add('input__input_hasError');
-            }
-    }
-
     componentDidMount() {
-        this.initValidate();
+        initValidateInputs(this.element);
+        const button = this.element.querySelector('button');
+        if (button) {
+            button.addEventListener('click', e => {
+                e.preventDefault();
+                const inputs: NodeListOf<HTMLInputElement> = this.element.querySelectorAll('.input__input');
+                inputs.forEach(input => getValidationByInputName(input)())
+            })
+        }
         hideLabelIfEmpty(this.element);
     }
 

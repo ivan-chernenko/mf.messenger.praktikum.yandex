@@ -9,13 +9,13 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { shallowEquals } from "../shallow-equal/index.js";
+import { shallowEquals } from '../shallow-equal/index.js';
 import { EventBus } from '../event-bus/index.js';
-import { EVENTS } from "./events.js";
+import { EVENTS } from './events.js';
 var Component = /** @class */ (function () {
     function Component(tagName, props) {
         var _this = this;
-        if (tagName === void 0) { tagName = "div"; }
+        if (tagName === void 0) { tagName = 'div'; }
         this.init = function () {
             _this.createResources();
             _this.eventBus.emit(EVENTS.FLOW_RENDER);
@@ -48,9 +48,6 @@ var Component = /** @class */ (function () {
         this._componentDidMount = function () {
             _this.componentDidMount(_this.props);
         };
-        this._componentDidRender = function () {
-            _this.componentDidRender();
-        };
         this._componentDidUpdate = function (oldProps, newProps) {
             var isComponentNeedToBeUpdate = _this.componentDidUpdate(oldProps, newProps);
             if (isComponentNeedToBeUpdate)
@@ -58,7 +55,6 @@ var Component = /** @class */ (function () {
         };
         this._render = function () {
             _this.element.insertAdjacentHTML("afterbegin", _this.render());
-            _this.eventBus.emit(EVENTS.FLOW_CDR);
         };
         this.show = function () {
             _this.element.style.visibility = 'visible';
@@ -77,13 +73,10 @@ var Component = /** @class */ (function () {
         eventBus.on(EVENTS.INIT, this.init);
         eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount);
         eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate);
-        eventBus.on(EVENTS.FLOW_CDR, this._componentDidRender);
         eventBus.on(EVENTS.FLOW_RENDER, this._render);
     };
     Component.prototype.componentDidMount = function (_) { };
     ;
-    Component.prototype.componentDidRender = function () {
-    };
     Component.prototype.componentDidUpdate = function (oldProps, newProps) {
         return !shallowEquals(oldProps, newProps);
     };

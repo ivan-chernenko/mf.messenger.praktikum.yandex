@@ -11,28 +11,13 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __read = (this && this.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
 import { Component } from '../../lib/component/index.js';
 import { Input } from '../../components/input/index.js';
 import { Button } from '../../components/button/index.js';
 import { template } from './template.js';
 import { render } from '../../lib/render/index.js';
 import { hideLabelIfEmpty } from '../../lib/input-labels/index.js';
+import { getValidationByInputName, initValidateInputs } from "../../lib/validating";
 var LoginPage = /** @class */ (function (_super) {
     __extends(LoginPage, _super);
     function LoginPage() {
@@ -59,33 +44,17 @@ var LoginPage = /** @class */ (function (_super) {
             }),
         }) || this;
     }
-    LoginPage.prototype.initValidate = function () {
-        var inputs = this.element.querySelectorAll('.input__input');
-        if (inputs.length < 2)
-            return;
-        var _a = __read(Array.from(inputs), 2), login = _a[0], password = _a[1];
-        login.onblur = function () {
-            if (!login.value)
-                login.classList.add('input__input_hasError');
-        };
-        login.onfocus = function () { return login.classList.remove('input__input_hasError'); };
-        password.onblur = function () {
-            if (!password.value || password.value !== '123123')
-                login.classList.add('input__input_hasError');
-        };
-        password.onfocus = function () { return login.classList.remove('input__input_hasError'); };
-        var button = this.element.querySelector('button');
-        if (button)
-            button.onclick = function (e) {
-                e.preventDefault();
-                if (!password.value || password.value !== '123123')
-                    login.classList.add('input__input_hasError');
-                if (!login.value)
-                    login.classList.add('input__input_hasError');
-            };
-    };
     LoginPage.prototype.componentDidMount = function () {
-        this.initValidate();
+        var _this = this;
+        initValidateInputs(this.element);
+        var button = this.element.querySelector('button');
+        if (button) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                var inputs = _this.element.querySelectorAll('.input__input');
+                inputs.forEach(function (input) { return getValidationByInputName(input)(); });
+            });
+        }
         hideLabelIfEmpty(this.element);
     };
     LoginPage.prototype.render = function () {

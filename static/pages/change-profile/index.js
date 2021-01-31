@@ -11,32 +11,17 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __read = (this && this.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
 import { Component } from '../../lib/component/index.js';
 import { Input } from '../../components/input/index.js';
 import { Button } from '../../components/button/index.js';
 import { template } from './template.js';
 import { render } from '../../lib/render/index.js';
 import { hideLabelIfEmpty } from '../../lib/input-labels/index.js';
+import { getValidationByInputName, initValidateInputs } from "../../lib/validating";
 var ChangeProfilePage = /** @class */ (function (_super) {
     __extends(ChangeProfilePage, _super);
     function ChangeProfilePage() {
-        var _this = _super.call(this, 'div', {
+        return _super.call(this, 'div', {
             firstName: new Input({
                 inputClassName: '',
                 labelClassName: 'change-profile-form__input',
@@ -90,67 +75,18 @@ var ChangeProfilePage = /** @class */ (function (_super) {
                 className: 'change-profile-form__button'
             }),
         }) || this;
-        _this.EMAIL_REG_EXP = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-        _this.PHONE_REG_EXP = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
-        return _this;
     }
-    ChangeProfilePage.prototype.initValidate = function () {
-        var _this = this;
-        var inputs = this.element.querySelectorAll('.input__input');
-        if (inputs.length < 6)
-            return;
-        var _a = __read(Array.from(inputs), 6), email = _a[0], login = _a[1], firstName = _a[2], secondName = _a[3], displayName = _a[4], phone = _a[5];
-        debugger;
-        email.onblur = function () {
-            if (!_this.EMAIL_REG_EXP.test(email.value))
-                email.classList.add('input__input_hasError');
-        };
-        email.onfocus = function () { return email.classList.remove('input__input_hasError'); };
-        login.onblur = function () {
-            if (!login.value)
-                login.classList.add('input__input_hasError');
-        };
-        login.onfocus = function () { return login.classList.remove('input__input_hasError'); };
-        firstName.onblur = function () {
-            if (!firstName.value)
-                firstName.classList.add('input__input_hasError');
-        };
-        firstName.onfocus = function () { return firstName.classList.remove('input__input_hasError'); };
-        secondName.onblur = function () {
-            if (!secondName.value)
-                secondName.classList.add('input__input_hasError');
-        };
-        secondName.onfocus = function () { return secondName.classList.remove('input__input_hasError'); };
-        phone.onblur = function () {
-            if (!phone.value || !_this.PHONE_REG_EXP.test(phone.value))
-                phone.classList.add('input__input_hasError');
-        };
-        phone.onfocus = function () { return phone.classList.remove('input__input_hasError'); };
-        displayName.onblur = function () {
-            if (!displayName.value)
-                displayName.classList.add('input__input_hasError');
-        };
-        displayName.onfocus = function () { return displayName.classList.remove('input__input_hasError'); };
-        var button = this.element.querySelector('button');
-        if (button)
-            button.onclick = function (e) {
-                e.preventDefault();
-                if (!phone.value || !_this.PHONE_REG_EXP.test(phone.value))
-                    phone.classList.add('input__input_hasError');
-                if (!secondName.value)
-                    secondName.classList.add('input__input_hasError');
-                if (!firstName.value)
-                    firstName.classList.add('input__input_hasError');
-                if (!login.value)
-                    login.classList.add('input__input_hasError');
-                if (!_this.EMAIL_REG_EXP.test(email.value))
-                    email.classList.add('input__input_hasError');
-                if (!displayName.value)
-                    displayName.classList.add('input__input_hasError');
-            };
-    };
     ChangeProfilePage.prototype.componentDidMount = function () {
-        this.initValidate();
+        var _this = this;
+        initValidateInputs(this.element);
+        var button = this.element.querySelector('button');
+        if (button) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                var inputs = _this.element.querySelectorAll('.input__input');
+                inputs.forEach(function (input) { return getValidationByInputName(input)(); });
+            });
+        }
         hideLabelIfEmpty(this.element);
     };
     ChangeProfilePage.prototype.render = function () {
