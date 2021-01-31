@@ -1,0 +1,2 @@
+export var template = "\n<main class='content content_centered'>\n        <form class='form login-form'>\n            <h1 class='form__header'>\n                \u0412\u0445\u043E\u0434\n            </h1>\n            <%= login %>\n            <%= password %>\n            <%= button %>\n            <a\n                    class='link login-form__link'\n                    href='/register'\n            >\n                \u041D\u0435\u0442 \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u0430?\n            </a>\n        </form>\n    </main>\n";
+//# sourceMappingURL=template.js.map

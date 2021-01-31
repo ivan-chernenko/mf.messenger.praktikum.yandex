@@ -1,0 +1,2 @@
+export var template = "\n    <main class='content'>\n        <div class='back-section'>\n            <a\n                    class='back-section__button'\n                    href='/profile'\n            >\n            </a>\n        </div>\n        <form class='change-password-form'>\n            <div class='avatar change-password-form__avatar'>\n            </div>\n            <%= oldPassword %>\n            <%= newPassword %>\n            <%= repeatPassword %>\n            <%= button %>\n        </form>\n    </main>\n";
+//# sourceMappingURL=template.js.map

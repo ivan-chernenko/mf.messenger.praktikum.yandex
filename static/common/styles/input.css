@@ -39,3 +39,7 @@
     left: 40px;
     top: 2px;
 }
+
+.input__input_hasError {
+    border-bottom: 1px solid #FF2F2F;
+}

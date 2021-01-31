@@ -12,76 +12,8 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <main class="content">
-        <div class="back-section">
-            <a
-                    class="back-section__button"
-                    href="/"
-            >
-            </a>
-        </div>
-        <form class="change-profile-form">
-            <div class="avatar change-profile-form__avatar">
-            </div>
-            <label class="input change-profile-form__input">
-                Почта
-                <input
-                        type="email"
-                        value="name@example.com"
-                        placeholder="Почта"
-                        class="input__input"
-                />
-            </label>
-            <label class="input change-profile-form__input">
-                Имя
-                <input
-                        value="Иван"
-                        placeholder="Имя"
-                        class="input__input"
-                />
-            </label>
-            <label class="input change-profile-form__input">
-                Фамилия
-                <input
-                        value="Черненко"
-                        placeholder="Фамилия"
-                        class="input__input"
-                />
-            </label>
-            <label class="input change-profile-form__input">
-                Логин
-                <input
-                        value="ivan123"
-                        placeholder="Логин"
-                        class="input__input"
-                />
-            </label>
-            <label class="input change-profile-form__input">
-                Отображаемое имя
-                <input
-                        class="input__input"
-                        placeholder="Отображаемое имя"
-                        value="ivan"
-                />
-            </label>
-            <label class="input change-profile-form__input">
-                Телефон
-                <input
-                        type="tel"
-                        class="input__input"
-                        placeholder="Телефон"
-                        value="+7 (915) 265 64 05"
-                />
-            </label>
-            <button
-                    class="button change-profile-form__button"
-                    type="submit"
-            >
-                Сохранить
-            </button>
-        </form>
-    </main>
-    <script src="../common/scripts/input-label.js"></script>
-    <script src="index.js"></script>
+<div class="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+<script type="module" src="../pages/change-profile/index.js"></script>
 </body>
 </html>
