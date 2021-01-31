@@ -76,6 +76,9 @@ export class RegisterPage extends Component<RegisterPageProps> {
         });
     }
 
+    // я понимаю, что эта валдиция ужасна и никуда не годиться, но не успел сделать лучше(
+    // понимаю что на этой странице и на-других очень много дублирование кода
+    // обещаю к следующему разу переписать чисто
     initValidate() {
         const inputs: NodeListOf<HTMLInputElement> = this.element.querySelectorAll('.input__input');
         if (inputs.length < 7)
