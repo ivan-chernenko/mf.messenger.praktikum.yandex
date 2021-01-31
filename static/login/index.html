@@ -12,38 +12,8 @@
     <link rel="stylesheet" href="../common/styles/button.css">
 </head>
 <body>
-    <main class="content content_centered">
-        <form class="form login-form">
-            <h1 class="form__header">
-                Вход
-            </h1>
-            <label class="input login-form__input">
-                Логин
-                <input
-                        placeholder="Логин"
-                        class="input__input"
-                />
-            </label>
-            <label class="input login-form__input">
-                Пароль
-                <input
-                        type="password"
-                        placeholder="Пароль"
-                        class="input__input"
-                />
-            </label>
-            <button type="submit" class="button login-form__button">
-                Авторизоваться
-            </button>
-            <a
-                    class="link login-form__link"
-                    href="/register"
-            >
-                Нет аккаунта?
-            </a>
-        </form>
-    </main>
-    <script src="../common/scripts/input-label.js"></script>
-    <script src="index.js"></script>
+<div class="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+<script type="module" src="../pages/login/index.js"></script>
 </body>
 </html>

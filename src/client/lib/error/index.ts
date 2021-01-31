@@ -1,1 +1,1 @@
-export {throwIfMoreThen} from './throwIfMoreThen';
+export {throwIfMoreThen} from './throwIfMoreThen.js';

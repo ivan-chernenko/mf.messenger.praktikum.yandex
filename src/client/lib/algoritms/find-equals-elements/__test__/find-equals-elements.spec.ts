@@ -2,23 +2,23 @@ import {findEqualsElements} from "../find-equals-elements";
 
 describe('find equals elements', () => {
     test('zero length first array', () => {
-        const arr1 = [];
+        const arr1: number[] = [];
         const arr2 = [1, 2, 3];
-        const res = [];
+        const res: number[] = [];
         expect(findEqualsElements(arr1, arr2)).toEqual(res);
     });
 
     test('zero length second array', () => {
         const arr1 = [1, 2, 3];
-        const arr2 = [];
-        const res = [];
+        const arr2: number[] = [];
+        const res: number[] = [];
         expect(findEqualsElements(arr1, arr2)).toEqual(res);
     });
 
     test('no equals', () => {
         const arr1 = [1, 2, 3];
         const arr2 = [4, 5, 6];
-        const res = [];
+        const res: number[] = [];
         expect(findEqualsElements(arr1, arr2)).toEqual(res);
     });
 

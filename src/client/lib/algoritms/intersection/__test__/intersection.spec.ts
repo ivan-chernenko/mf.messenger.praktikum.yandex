@@ -1,31 +1,32 @@
 import {intersection} from "../intersection";
+import {Tuple} from "../../../tuple";
 
 describe('intersection', () => {
     test('zero first intervals', () => {
-       const intervals1 = [];
-       const intervals2 = [[5, 11], [14, 18], [20, 23]];
-       const res = [];
+       const intervals1: Tuple<number>[] = [];
+       const intervals2: Tuple<number>[] = [[5, 11], [14, 18], [20, 23]];
+       const res: Tuple<number>[] = [];
        expect(intersection(intervals1, intervals2)).toEqual(res);
     });
 
     test('zero second intervals', () => {
-        const intervals1 = [[5, 11], [14, 18], [20, 23]];
-        const intervals2 = [];
-        const res = [];
+        const intervals1: Tuple<number>[] = [[5, 11], [14, 18], [20, 23]];
+        const intervals2: Tuple<number>[] = [];
+        const res: Tuple<number>[] = [];
         expect(intersection(intervals1, intervals2)).toEqual(res);
     });
 
     test('test case 1', () => {
-        const intervals1 = [[5, 11], [14, 18], [20, 23]];
-        const intervals2 = [[8, 12], [17, 22]];
-        const res = [[8, 11], [17, 18], [20, 22]];
+        const intervals1: Tuple<number>[] = [[5, 11], [14, 18], [20, 23]];
+        const intervals2: Tuple<number>[] = [[8, 12], [17, 22]];
+        const res: Tuple<number>[] = [[8, 11], [17, 18], [20, 22]];
         expect(intersection(intervals1, intervals2)).toEqual(res);
     });
 
     test('test case 2', () => {
-        const intervals1 = [[9, 15], [18, 21]];
-        const intervals2 = [[10, 14], [21, 22]];
-        const res = [[10, 14]];
+        const intervals1: Tuple<number>[] = [[9, 15], [18, 21]];
+        const intervals2: Tuple<number>[] = [[10, 14], [21, 22]];
+        const res: Tuple<number>[] = [[10, 14]];
         expect(intersection(intervals1, intervals2)).toEqual(res);
     });
 });

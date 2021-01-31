@@ -1,1 +1,1 @@
-export {shallowEquals} from 'shadow-equal';
+export {shallowEquals} from './shadow-equal.js';

@@ -12,50 +12,8 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <main class="content">
-        <div class="back-section">
-            <a
-                    class="back-section__button"
-                    href="/"
-            >
-            </a>
-        </div>
-        <form class="change-password-form">
-            <div class="avatar change-password-form__avatar">
-            </div>
-            <label class="input change-password-form__input">
-                Старый пароль
-                <input
-                        type="password"
-                        placeholder="Старый пароль"
-                        class="input__input"
-                />
-            </label>
-            <label class="input change-password-form__input">
-                Новый пароль
-                <input
-                        type="password"
-                        placeholder="Новый пароль"
-                        class="input__input"
-                />
-            </label>
-            <label class="input change-password-form__input">
-                Новый пароль еще раз
-                <input
-                        type="password"
-                        placeholder="Новый пароль еще раз"
-                        class="input__input"
-                />
-            </label>
-            <button
-                    class="button change-password-form__button"
-                    type="submit"
-            >
-                Сохранить
-            </button>
-        </form>
-    </main>
-    <script src="../common/scripts/input-label.js"></script>
-    <script src="index.js"></script>
+    <div class="app"></div>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script type="module" src="../pages/change-password/index.js"></script>
 </body>
 </html>
