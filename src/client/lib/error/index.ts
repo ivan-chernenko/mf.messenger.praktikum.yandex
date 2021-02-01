@@ -1,1 +1,0 @@
-export {throwIfMoreThen} from './throwIfMoreThen.js';
