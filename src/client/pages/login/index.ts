@@ -5,7 +5,7 @@ import {template} from './template.js';
 import {LoginPageProps} from './types.js';
 import {render} from '../../lib/render/index.js';
 import {hideLabelIfEmpty} from '../../lib/input-labels/index.js';
-import {getValidationByInputName, initValidateInputs} from "../../lib/validating";
+import {validateFieldByName, initValidateInputs} from "../../lib/validating/index.js";
 
 export class LoginPage extends Component<LoginPageProps> {
     constructor() {
@@ -40,7 +40,7 @@ export class LoginPage extends Component<LoginPageProps> {
             button.addEventListener('click', e => {
                 e.preventDefault();
                 const inputs: NodeListOf<HTMLInputElement> = this.element.querySelectorAll('.input__input');
-                inputs.forEach(input => getValidationByInputName(input)())
+                inputs.forEach(input => validateFieldByName(input))
             })
         }
         hideLabelIfEmpty(this.element);

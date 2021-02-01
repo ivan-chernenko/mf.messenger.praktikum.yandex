@@ -1,9 +1,4 @@
 export {
-    validateEmail,
-    validateValueExist,
-    validatePassword,
-    validateRepeatPassword,
-    getValidationByInputName,
+    validateFieldByName,
     initValidateInputs,
-    validatePhone
 } from './validate.js'

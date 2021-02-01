@@ -21,54 +21,56 @@ export abstract class Component<T> {
         eventBus.emit(EVENTS.INIT);
     }
 
-    private init = () => {
+    private init() {
         this.createResources();
         this.eventBus.emit(EVENTS.FLOW_RENDER);
         this.eventBus.emit(EVENTS.FLOW_CDM);
     };
 
     private registerEvents(eventBus: EventBus) {
-        eventBus.on(EVENTS.INIT, this.init);
-        eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount);
-        eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate);
-        eventBus.on(EVENTS.FLOW_RENDER, this._render);
+        eventBus.on(EVENTS.INIT, this.init.bind(this));
+        eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+        eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+        eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
-    private makePropsProxy = (props: T) => new Proxy(props, {
-        set: (target: any, p: string, value: any): boolean => {
-            const oldProps = {...target};
-            target[p] = value;
-            this.eventBus.emit(EVENTS.FLOW_CDU, oldProps, target);
-            return true;
-        },
-        deleteProperty: (_: T, __: PropertyKey): boolean => {
-            throw new Error('нет доступ');
-        }
-    });
+    private makePropsProxy(props: T) {
+        return new Proxy(props, {
+            set: (target: any, p: string, value: any): boolean => {
+                const oldProps = {...target};
+                target[p] = value;
+                this.eventBus.emit(EVENTS.FLOW_CDU, oldProps, target);
+                return true;
+            },
+            deleteProperty: (_: T, __: PropertyKey): boolean => {
+                throw new Error('нет доступ');
+            }
+        });
+    }
 
-    private createResources = () => {
+    private createResources() {
         const {tagName} = this.meta;
         this.element = document.createElement(tagName);
     };
 
-    getContent = () => {
+    getContent() {
         return this.element;
     };
 
-    setProps = (nextProps: Partial<T>) => {
+    setProps(nextProps: Partial<T>) {
         if (!nextProps) {
             return;
         }
         Object.assign(this.props, nextProps);
     };
 
-    private _componentDidMount = () => {
+    private _componentDidMount() {
         this.componentDidMount(this.props);
     };
 
     componentDidMount(_: T) {};
 
-    private _componentDidUpdate = (oldProps: T, newProps: T) => {
+    private _componentDidUpdate(oldProps: T, newProps: T) {
         const isComponentNeedToBeUpdate = this.componentDidUpdate(oldProps, newProps);
         if (isComponentNeedToBeUpdate)
             this.eventBus.emit(EVENTS.FLOW_RENDER);
@@ -78,7 +80,7 @@ export abstract class Component<T> {
         return !shallowEquals(oldProps, newProps);
     };
 
-    private _render = () => {
+    private _render() {
         this.element.insertAdjacentHTML("afterbegin", this.render());
     };
 
@@ -86,11 +88,11 @@ export abstract class Component<T> {
         return '';
     };
 
-    show = () => {
+    show() {
         this.element.style.visibility = 'visible';
     };
 
-    hide = () => {
+    hide() {
         this.element.style.visibility = 'hidden';
     };
 }

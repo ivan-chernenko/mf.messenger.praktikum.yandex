@@ -4,55 +4,60 @@ const PHONE_REG_EXP = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
 export const initValidateInputs = (element: HTMLElement) => {
     const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input__input');
     inputs.forEach(input => {
-        input.addEventListener('blur', getValidationByInputName(input));
+        input.addEventListener('blur', () => validateFieldByName(input));
         input.addEventListener('focus', () => input.classList.remove('input__input_hasError'))
     })
 };
 
-export const getValidationByInputName = (input: HTMLInputElement): () => void => {
+export const validateFieldByName = (input: HTMLInputElement) => {
     switch (input.dataset.name) {
         case 'email':
-            return () => validateEmail(input);
+            return validateEmail(input);
         case 'password':
             return () => validatePassword(input);
         case 'repeatPassword':
-            const password = document.querySelector('[data-name="password"]') as HTMLInputElement;
-            if (!password)
-                return () => validateValueExist(input);
-            return () => validateRepeatPassword(input, password);
+            return validateRepeatPassword(input);
         case 'repeatNewPassword':
-            const newPassword = document.querySelector('[data-name="newPassword"]') as HTMLInputElement;
-            if (!newPassword)
-                return () => validateValueExist(input);
-            return () => validateRepeatPassword(input, newPassword);
+            return validateRepeatNewPassword(input);
         case 'phone':
-            return () => validatePhone(input);
+            return validatePhone(input);
         default:
-            return () => validateValueExist(input)
+            return validateValueExist(input)
     }
 };
 
-export const validateEmail = (input: HTMLInputElement) => {
+const validateEmail = (input: HTMLInputElement) => {
     if (!EMAIL_REG_EXP.test(input.value))
         input.classList.add('input__input_hasError');
 };
 
-export const validatePassword = (input: HTMLInputElement) => {
+const validatePassword = (input: HTMLInputElement) => {
     if (input.value !== '123123')
         input.classList.add('input__input_hasError');
 };
 
-export const validateRepeatPassword = (input: HTMLInputElement, passwordInput: HTMLInputElement) => {
-    if (!input.value || (passwordInput && input.value !== passwordInput.value))
+const validateRepeatPassword = (input: HTMLInputElement) => {
+    const password = document.querySelector('[data-name="password"]') as HTMLInputElement;
+    if (!password)
+        return validateValueExist(input);
+    if (!input.value || (password && input.value !== password.value))
         input.classList.add('input__input_hasError');
 };
 
-export const validateValueExist = (input: HTMLInputElement) => {
+const validateRepeatNewPassword = (input: HTMLInputElement) => {
+    const newPassword = document.querySelector('[data-name="newPassword"]') as HTMLInputElement;
+    if (!newPassword)
+        return validateValueExist(input);
+    if (!input.value || (newPassword && input.value !== newPassword.value))
+        input.classList.add('input__input_hasError');
+};
+
+const validateValueExist = (input: HTMLInputElement) => {
     if (!input.value)
         input.classList.add('input__input_hasError');
 };
 
-export const validatePhone = (input: HTMLInputElement) => {
+const validatePhone = (input: HTMLInputElement) => {
     if (!input.value || PHONE_REG_EXP.test(input.value))
         input.classList.add('input__input_hasError');
 };
