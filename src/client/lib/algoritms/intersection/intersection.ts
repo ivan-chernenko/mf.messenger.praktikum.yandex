@@ -2,6 +2,16 @@ import {Tuple} from "../../tuple";
 
 export const intersection = (intervals1: Tuple<number>[], intervals2: Tuple<number>[]): Tuple<number>[] => {
     let index1 = 0, index2 = 0;
+    const getIntersectionAndUpdateIndexes = (i1e: number, i2e: number, is: number): Tuple<number> => {
+        if (i1e < i2e) {
+            index1++;
+            return [is, i1e]
+        }
+        else {
+            index2++;
+            return [is, i2e]
+        }
+    };
     const res: Tuple<number>[] = [];
     if (intervals1.length === 0 || intervals2.length === 0)
         return res;
@@ -15,20 +25,9 @@ export const intersection = (intervals1: Tuple<number>[], intervals2: Tuple<numb
         else if (interval2Start >= interval1End)
             index1++;
         else if (interval1Start > interval2Start)
-            res.push(getIntersectionAndUpdateIndexes(interval1End, interval2End, interval1Start, index1, index2));
+            res.push(getIntersectionAndUpdateIndexes(interval1End, interval2End, interval1Start));
         else if (interval1Start < interval2Start)
-            res.push(getIntersectionAndUpdateIndexes(interval1End, interval2End, interval2Start, index1, index2));
+            res.push(getIntersectionAndUpdateIndexes(interval1End, interval2End, interval2Start));
     }
     return res;
-};
-
-const getIntersectionAndUpdateIndexes = (interval1End, interval2End, intervalStart, index1, index2) => {
-    if (interval1End < interval2End) {
-        index1++;
-        return [intervalStart, interval1End];
-    }
-    else if (interval1End > interval2End)  {
-        index2++;
-        return [intervalStart, interval2End];
-    }
 };
