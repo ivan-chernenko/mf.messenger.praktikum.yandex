@@ -4,7 +4,8 @@ const PHONE_REG_EXP = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
 export const initValidateInputs = (element: HTMLElement) => {
     const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input__input');
     inputs.forEach(input => {
-        input.addEventListener('blur', () => validateFieldByName(input));
+        if (input.dataset.name !== 'password')
+            input.addEventListener('blur', () => validateFieldByName(input));
         input.addEventListener('focus', () => input.classList.remove('input__input_hasError'))
     })
 };
@@ -14,9 +15,7 @@ export const validateFieldByName = (input: HTMLInputElement) => {
         case 'email':
             return validateEmail(input);
         case 'password':
-            return () => validatePassword(input);
-        case 'repeatPassword':
-            return validateRepeatPassword(input);
+            return validatePassword(input);
         case 'repeatNewPassword':
             return validateRepeatNewPassword(input);
         case 'phone':
@@ -33,14 +32,6 @@ const validateEmail = (input: HTMLInputElement) => {
 
 const validatePassword = (input: HTMLInputElement) => {
     if (input.value !== '123123')
-        input.classList.add('input__input_hasError');
-};
-
-const validateRepeatPassword = (input: HTMLInputElement) => {
-    const password = document.querySelector('[data-name="password"]') as HTMLInputElement;
-    if (!password)
-        return validateValueExist(input);
-    if (!input.value || (password && input.value !== password.value))
         input.classList.add('input__input_hasError');
 };
 
