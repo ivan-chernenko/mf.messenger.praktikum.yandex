@@ -14,26 +14,21 @@ export const intersection = (intervals1: Tuple<number>[], intervals2: Tuple<numb
             index2++;
         else if (interval2Start >= interval1End)
             index1++;
-        else if (interval1Start > interval2Start) {
-            if (interval1End < interval2End) {
-                res.push([interval1Start, interval1End]);
-                index1++;
-            }
-            else if (interval1End > interval2End) {
-                res.push([interval1Start, interval2End]);
-                index2++;
-            }
-        }
-        else if (interval1Start < interval2Start) {
-            if (interval1End < interval2End) {
-                res.push([interval2Start, interval1End]);
-                index1++;
-            }
-            else if (interval1End > interval2End) {
-                res.push([interval2Start, interval2End]);
-                index2++;
-            }
-        }
+        else if (interval1Start > interval2Start)
+            res.push(getIntersectionAndUpdateIndexes(interval1End, interval2End, interval1Start, index1, index2));
+        else if (interval1Start < interval2Start)
+            res.push(getIntersectionAndUpdateIndexes(interval1End, interval2End, interval2Start, index1, index2));
     }
     return res;
+};
+
+const getIntersectionAndUpdateIndexes = (interval1End, interval2End, intervalStart, index1, index2) => {
+    if (interval1End < interval2End) {
+        index1++;
+        return [intervalStart, interval1End];
+    }
+    else if (interval1End > interval2End)  {
+        index2++;
+        return [intervalStart, interval2End];
+    }
 };
