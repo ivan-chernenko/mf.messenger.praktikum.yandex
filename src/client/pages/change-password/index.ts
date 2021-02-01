@@ -5,7 +5,7 @@ import {render} from '../../lib/render/index.js';
 import {Button} from '../../components/button/index.js';
 import {Input} from '../../components/input/index.js';
 import {hideLabelIfEmpty} from '../../lib/input-labels/index.js';
-import {getValidationByInputName, initValidateInputs} from "../../lib/validating";
+import {validateFieldByName, initValidateInputs} from "../../lib/validating/index.js";
 
 export class ChangePasswordPage extends Component<ChangePasswordProps> {
     constructor() {
@@ -48,7 +48,7 @@ export class ChangePasswordPage extends Component<ChangePasswordProps> {
             button.addEventListener('click', e => {
                 e.preventDefault();
                 const inputs: NodeListOf<HTMLInputElement> = this.element.querySelectorAll('.input__input');
-                inputs.forEach(input => getValidationByInputName(input)())
+                inputs.forEach(input => validateFieldByName(input))
             })
         }
         hideLabelIfEmpty(this.element);
