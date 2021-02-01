@@ -82,7 +82,7 @@ export class RegisterPage extends Component<RegisterPageProps> {
             button.addEventListener('click', e => {
                 e.preventDefault();
                 const inputs: NodeListOf<HTMLInputElement> = this.element.querySelectorAll('.input__input');
-                inputs.forEach(input => validateFieldByName(input)())
+                inputs.forEach(input => validateFieldByName(input))
             })
         }
         hideLabelIfEmpty(this.element);
