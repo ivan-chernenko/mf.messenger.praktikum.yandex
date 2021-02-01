@@ -1,2 +1,0 @@
-export var template = "\n<label class='input <%- labelClassName %>'>\n    <%- title %>\n    <input\n        type='<%- type %>'\n        data-name='<%- name %>'\n        placeholder='<%- placeholder %>'\n        class='input__input <%- inputClassName %>'\n    />\n</label>\n";
-//# sourceMappingURL=template.js.map

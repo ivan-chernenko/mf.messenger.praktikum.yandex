@@ -1,1 +1,0 @@
-{"version":3,"file":"shadow-equal.js","sourceRoot":"","sources":["../../../src/client/lib/shallow-equal/shadow-equal.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,IAAM,aAAa,GAAG,UAAC,IAA0B,EAAE,IAA0B,IAAK,OAAA,MAAM;KAC1F,IAAI,CAAC,IAAI,CAAC;KACV,KAAK,CAAC,UAAA,GAAG,IAAI,OAAA,IAAI,CAAC,GAAG,CAAC,KAAK,IAAI,CAAC,GAAG,CAAC,EAAvB,CAAuB,CAAC,EAF+C,CAE/C,CAAC"}

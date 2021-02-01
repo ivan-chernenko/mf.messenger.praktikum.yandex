@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server/index.js",
     "test": "jest",
-    "build": "tsc",
+    "build": "tsc"
   },
   "engines": {
     "node": "^14"

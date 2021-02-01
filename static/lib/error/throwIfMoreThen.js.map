@@ -1,1 +1,0 @@
-{"version":3,"file":"throwIfMoreThen.js","sourceRoot":"","sources":["../../../src/client/lib/error/throwIfMoreThen.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,IAAM,eAAe,GAAG,UAAC,SAAiB,IAAK,OAAA,UAAC,KAAa,EAAE,QAAgB;IAClF,IAAI,KAAK,GAAG,QAAQ;QAChB,MAAM,IAAI,KAAK,CAAC,SAAS,CAAC,CAAA;AAClC,CAAC,EAHqD,CAGrD,CAAC"}
