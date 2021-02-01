@@ -17,7 +17,7 @@ export class RegisterPage extends Component<RegisterPageProps> {
                 placeholder: 'Пароль',
                 title: 'Пароль',
                 type: 'password',
-                name: 'password',
+                name: 'newPassword',
             }),
             firstName: new Input({
                 inputClassName: '',
@@ -49,7 +49,7 @@ export class RegisterPage extends Component<RegisterPageProps> {
                 placeholder: 'Пароль еще раз',
                 title: 'Пароль еще раз',
                 type: 'password',
-                name: 'repeatPassword',
+                name: 'repeatNewPassword',
             }),
             lastName: new Input({
                 inputClassName: '',
