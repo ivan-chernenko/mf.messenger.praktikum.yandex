@@ -1,2 +1,2 @@
-export {Button} from './button.js';
-export {ButtonProps} from './types.js';
+export {Button} from './button';
+export {ButtonProps} from './types';

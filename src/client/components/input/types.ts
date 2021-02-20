@@ -1,10 +1,13 @@
 export interface InputProps {
-    title: string;
-    inputClassName: string;
-    labelClassName: string;
-    placeholder: string;
+    root: string;
+    title?: string;
+    inputClassName?: string;
+    labelClassName?: string;
+    onFocus?: (e?: FocusEvent) => void;
+    onBlur?: (e?: FocusEvent) => void;
+    placeholder?: string;
     type: string;
-    name: string;
-    hasError?: boolean;
+    name?: string;
+    errorText?: string;
     value?: string;
 }

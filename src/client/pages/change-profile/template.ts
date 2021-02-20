@@ -1,22 +1,16 @@
+import {placeholder} from "../../lib/placeholder/index";
+
 export const template = `
 <main class='content'>
-        <div class='back-section'>
-            <a
-                    class='back-section__button'
-                    href='/profile'
-            >
-            </a>
-        </div>
+        ${placeholder('change-profile-back')}
         <form class='change-profile-form'>
-            <div class='avatar change-profile-form__avatar'>
-            </div>
-            <%= email %>
-            <%= firstName %>
-            <%= lastName %>
-            <%= login %>
-            <%= displayName %>
-            <%= phone %>
-            <%= button %>
+            ${placeholder('change-email')}
+            ${placeholder('change-first-name')}
+            ${placeholder('change-last-name')}
+            ${placeholder('change-login')}
+            ${placeholder('change-display-name')}
+            ${placeholder('change-phone')}
+            ${placeholder('save-profile')}
         </form>
     </main>
 `;

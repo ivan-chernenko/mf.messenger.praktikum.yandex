@@ -1,1 +1,1 @@
-export type Tuple<T> = [T, T];
+export type Tuple<First, Second = First> = [First, Second];

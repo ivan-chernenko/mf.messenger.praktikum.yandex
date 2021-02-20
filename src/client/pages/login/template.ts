@@ -1,18 +1,15 @@
+import {placeholder} from "../../lib/placeholder/index";
+
 export const template = `
 <main class='content content_centered'>
         <form class='form login-form'>
             <h1 class='form__header'>
-                Вход
+                Войти
             </h1>
-            <%= login %>
-            <%= password %>
-            <%= button %>
-            <a
-                    class='link login-form__link'
-                    href='/register'
-            >
-                Нет аккаунта?
-            </a>
+            ${placeholder('login-login')}
+            ${placeholder('login-password')}
+            ${placeholder('login-button')}
+            ${placeholder('login-link')}
         </form>
     </main>
 `;

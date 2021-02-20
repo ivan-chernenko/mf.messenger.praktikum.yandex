@@ -1,8 +1,5 @@
-import {Input} from '../../components/input/index.js';
-import {Button} from '../../components/button/index.js';
+import {LoginController} from '../../controllers/login-controller/index';
 
 export interface LoginPageProps {
-    login: Input,
-    password: Input,
-    button: Button,
+    loginController: LoginController;
 }

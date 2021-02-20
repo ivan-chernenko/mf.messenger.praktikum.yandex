@@ -1,4 +1,4 @@
-import {Tuple} from "../../tuple";
+import {Tuple} from "../../tuple/index";
 
 export const intersection = (intervals1: Tuple<number>[], intervals2: Tuple<number>[]): Tuple<number>[] => {
     let index1 = 0, index2 = 0;

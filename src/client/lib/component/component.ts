@@ -1,57 +1,40 @@
-import {shallowEquals} from '../shallow-equal/index.js';
-import {EventBus} from '../event-bus/index.js';
-import {EVENTS} from './events.js';
+import {isShallowEqual, PlainObject} from '../object-helpers/index';
 
 interface MetaData {
-    tagName: string;
+    queryToMount: string;
 }
 
 export abstract class Component<T> {
     protected element: HTMLElement;
-    protected readonly meta: MetaData;
-    protected readonly props: T;
-    protected readonly eventBus: EventBus;
+    protected meta: MetaData;
+    protected props: T & {name?: string};
+    protected oldProps: T & {name?: string};
+    protected children: Component<unknown>[];
 
-    protected constructor(tagName = 'div', props: T) {
-        const eventBus = new EventBus();
-        this.meta = {tagName};
+    protected constructor(queryToMount: string, props: T, children?: Component<unknown>[]) {
         this.props = this.makePropsProxy(props);
-        this.registerEvents(eventBus);
-        this.eventBus = eventBus;
-        eventBus.emit(EVENTS.INIT);
+        this.oldProps = {...this.props, };
+        this.meta = {queryToMount};
+        this.children = children ?? [];
     }
 
-    private init() {
-        this.createResources();
-        this.eventBus.emit(EVENTS.FLOW_RENDER);
-        this.eventBus.emit(EVENTS.FLOW_CDM);
-    };
-
-    private registerEvents(eventBus: EventBus) {
-        eventBus.on(EVENTS.INIT, this.init.bind(this));
-        eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-        eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-        eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
+    getName() {
+        return this.props.name ?? '';
     }
 
     private makePropsProxy(props: T) {
         return new Proxy(props, {
             set: (target: any, p: string, value: any): boolean => {
-                const oldProps = {...target};
                 target[p] = value;
-                this.eventBus.emit(EVENTS.FLOW_CDU, oldProps, target);
+                if (this.shouldComponentUpdate(this.oldProps, this.props))
+                    this._render();
                 return true;
             },
             deleteProperty: (_: T, __: PropertyKey): boolean => {
-                throw new Error('нет доступ');
+                throw new Error('Can\'t delete property from private props');
             }
         });
     }
-
-    private createResources() {
-        const {tagName} = this.meta;
-        this.element = document.createElement(tagName);
-    };
 
     getContent() {
         return this.element;
@@ -61,27 +44,51 @@ export abstract class Component<T> {
         if (!nextProps) {
             return;
         }
-        Object.assign(this.props, nextProps);
+        this.props = Object.assign(this.props, nextProps);
     };
 
-    private _componentDidMount() {
-        this.componentDidMount(this.props);
+    componentDidMount() {}
+
+    componentDidRender() {};
+
+    shouldComponentUpdate(oldProps: T, newProps: T) {
+        return !isShallowEqual(oldProps as PlainObject, newProps as PlainObject);
     };
 
-    componentDidMount(_: T) {};
+    mount() {
+        this._render();
+        this.componentDidMount();
+    }
 
-    private _componentDidUpdate(oldProps: T, newProps: T) {
-        const isComponentNeedToBeUpdate = this.componentDidUpdate(oldProps, newProps);
-        if (isComponentNeedToBeUpdate)
-            this.eventBus.emit(EVENTS.FLOW_RENDER);
-    };
+    private templateContent() {
+        const templateExecutor = window._.template(this.render());
+        return templateExecutor(this.props).trim();
+    }
 
-    componentDidUpdate(oldProps: T, newProps: T) {
-        return !shallowEquals(oldProps, newProps);
-    };
+    private createTemplateElement() {
+        const template = document.createElement('template');
+        template.innerHTML = this.templateContent();
+        return template.content.firstChild;
+    }
+
+    private updateContent() {
+        const content = this.createTemplateElement();
+        if (!this.element || !content) {
+            console.error(`can't update content of ${this.meta.queryToMount}`);
+            return;
+        }
+        this.element.replaceWith(content);
+        this.element = content as HTMLElement;
+    }
 
     private _render() {
-        this.element.insertAdjacentHTML("afterbegin", this.render());
+        const newElement = document.querySelector(this.meta.queryToMount) as HTMLElement;
+        if (newElement)
+            this.element = newElement;
+        this.updateContent();
+        this.oldProps = {...this.props};
+        this.children.forEach(c => c._render());
+        this.componentDidRender();
     };
 
     render(): string {
@@ -89,10 +96,11 @@ export abstract class Component<T> {
     };
 
     show() {
-        this.element.style.visibility = 'visible';
+        this.element.style.removeProperty('display');
+        this.componentDidMount();
     };
 
     hide() {
-        this.element.style.visibility = 'hidden';
+        this.element.style.display = 'none';
     };
 }

@@ -1,1 +1,1 @@
-export {Tuple} from './types.js';
+export {Tuple} from './types';

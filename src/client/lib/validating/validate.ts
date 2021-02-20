@@ -1,54 +1,79 @@
-const EMAIL_REG_EXP = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-const PHONE_REG_EXP = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
+import {Input} from "../../components/input/index";
+import {Component} from "../component";
+import {Schema} from "./types";
 
-export const initValidateInputs = (element: HTMLElement) => {
-    const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input__input');
+const getValue = (inputComponent: Input): string => {
+    return inputComponent.getContent().querySelector('input')?.value ?? '';
+};
+
+export const defaultValidateFn = (inputComponent: Input) => {
+    const value = getValue(inputComponent);
+    if (!value) {
+        inputComponent.showError();
+        return false;
+    }
+    return true;
+};
+
+export const validateEmail = (inputComponent: Input) => {
+    if (!defaultValidateFn(inputComponent))
+        return false;
+    const EMAIL_REG_EXP = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    const value = getValue(inputComponent);
+    if (!EMAIL_REG_EXP.test(value)) {
+        inputComponent.showError();
+        return false;
+    }
+    return true;
+};
+
+export const validatePhone = (inputComponent: Input) => {
+    if (!defaultValidateFn(inputComponent))
+        return false;
+    const PHONE_REG_EXP = /^((\+7|7|8)+([0-9]){10})$/;
+    const value = getValue(inputComponent);
+    if (!PHONE_REG_EXP.test(value)) {
+        inputComponent.showError();
+        return false;
+    }
+    return true;
+}
+
+export const validateRepeatPassword = (selector: string) => (inputComponent: Input) => {
+    if (!defaultValidateFn(inputComponent))
+        return false;
+    const value = getValue(inputComponent);
+    const passwordValue = (document.querySelector(selector) as HTMLInputElement)?.value ?? '';
+    if (passwordValue !== value) {
+        inputComponent.showError();
+        return false;
+    }
+    return true;
+};
+
+export const initValidating = (children: Component<unknown>[], schema: Schema) => {
+    const inputs = children.filter(ch => ch
+        .getContent()
+        .querySelector('input')
+        ?.tagName === 'INPUT'
+    ) as Input[];
     inputs.forEach(input => {
-        if (input.dataset.name !== 'password')
-            input.addEventListener('blur', () => validateFieldByName(input));
-        input.addEventListener('focus', () => input.classList.remove('input__input_hasError'))
+        input.setProps({
+            onBlur: () => schema.find(el => el.name === input.getName())?.fn(input),
+        })
     })
 };
 
-export const validateFieldByName = (input: HTMLInputElement) => {
-    switch (input.dataset.name) {
-        case 'email':
-            return validateEmail(input);
-        case 'password':
-            return validatePassword(input);
-        case 'repeatNewPassword':
-            return validateRepeatNewPassword(input);
-        case 'phone':
-            return validatePhone(input);
-        default:
-            return validateValueExist(input)
-    }
-};
-
-const validateEmail = (input: HTMLInputElement) => {
-    if (!EMAIL_REG_EXP.test(input.value))
-        input.classList.add('input__input_hasError');
-};
-
-const validatePassword = (input: HTMLInputElement) => {
-    if (input.value !== '123123')
-        input.classList.add('input__input_hasError');
-};
-
-const validateRepeatNewPassword = (input: HTMLInputElement) => {
-    const newPassword = document.querySelector('[data-name="newPassword"]') as HTMLInputElement;
-    if (!newPassword)
-        return validateValueExist(input);
-    if (!input.value || (newPassword && input.value !== newPassword.value))
-        input.classList.add('input__input_hasError');
-};
-
-const validateValueExist = (input: HTMLInputElement) => {
-    if (!input.value)
-        input.classList.add('input__input_hasError');
-};
-
-const validatePhone = (input: HTMLInputElement) => {
-    if (!input.value || PHONE_REG_EXP.test(input.value))
-        input.classList.add('input__input_hasError');
+export const validateInputs = (children: Component<unknown>[], schema: Schema) => {
+    let isValid = true;
+    const inputs = children.filter(ch => ch
+        .getContent()
+        .querySelector('input')
+        ?.tagName === 'INPUT'
+    ) as Input[];
+    inputs.forEach(input => {
+        if (!schema.find(el => el.name === input.getName())?.fn(input))
+            isValid = false;
+    });
+    return isValid;
 };
