@@ -2,10 +2,9 @@
     "compilerOptions": {
         "target": "es5",
         "lib": [
-            "es5",
+            "es2017",
             "es2015.promise",
             "dom",
-            "es2015"
         ],
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -25,6 +24,9 @@
         "downlevelIteration": true,
         "outDir": "static"
     },
+    "exclude": [
+        "src/**/*.spec.ts"
+    ],
     "include": [
         "src/**/*"
     ]

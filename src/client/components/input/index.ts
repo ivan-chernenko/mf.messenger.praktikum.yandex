@@ -1,1 +1,1 @@
-export {Input} from './input.js';
+export {Input} from './input';

@@ -7,4 +7,8 @@ const pathToStatic = path.join(__dirname, '..', '..', 'static');
 
 app.use(express.static(pathToStatic));
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(pathToStatic, 'index.html'));
+});
+
 app.listen(PORT);

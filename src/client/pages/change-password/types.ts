@@ -1,9 +1,5 @@
-import {Button} from '../../components/button/index.js';
-import {Input} from '../../components/input/input';
+import {ProfileController} from '../../controllers/profile-controller/index';
 
 export interface ChangePasswordProps {
-    button: Button;
-    newPassword: Input;
-    oldPassword: Input;
-    repeatPassword: Input;
+    profileController: ProfileController;
 }

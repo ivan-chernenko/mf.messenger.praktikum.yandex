@@ -7,5 +7,6 @@ export const template = `
         placeholder='<%- placeholder %>'
         class='input__input <%- inputClassName %>'
     />
+    <span class='input__error-text'><%- errorText %></span>
 </label>
 `;
