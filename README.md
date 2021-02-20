@@ -2,7 +2,7 @@ This is project for Yandex Praktikum.
 
 To run local you need install node, open project directory in console and write "npm i" and then "npm start".
 
-hosted on - https://inspiring-heyrovsky-110aab.netlify.app/login
+hosted on - https://inspiring-heyrovsky-110aab.netlify.app
 
 In this app u can login, register, create chat, delete chat, add user to chat, delete user from chat, change profile and password.
 
