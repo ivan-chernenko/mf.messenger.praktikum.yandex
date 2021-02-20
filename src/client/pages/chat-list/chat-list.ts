@@ -9,6 +9,8 @@ import {router} from "../../configure";
 import {ChatDAO} from "../../api/chat-list-api/types";
 import {ApiError} from "../../api/login-api/index";
 
+//todo: нормальный интерфейс для выбранного чата, добавления и удаления пользователей из чата
+
 export class ChatListPage extends Page<ChatListPageProps> {
     constructor(props: ChatListPageProps) {
         super('chat-list-page', props, [
