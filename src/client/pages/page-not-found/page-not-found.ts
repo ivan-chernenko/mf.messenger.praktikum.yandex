@@ -7,7 +7,8 @@ export class PageNotFound extends Page<{}> {
         super('not-found', {}, [
             new Link({
                 root: 'not-found-return-link',
-                href: '/profile'
+                href: '/profile',
+                title: 'Вернуться в профиль'
             })
         ]);
     }
