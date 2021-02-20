@@ -29,8 +29,8 @@ export const template = `
                 ${placeholder('add-user-button')}
             </div>
             <div class='selected-chat__remove-user'>
-                 ${placeholder('remove-user-input')}
-                 ${placeholder('remove-user-button')}
+                 ${placeholder('delete-user-input')}
+                 ${placeholder('delete-user-button')}
             </div>
         </div>
         

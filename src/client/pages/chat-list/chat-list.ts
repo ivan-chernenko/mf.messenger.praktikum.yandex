@@ -38,13 +38,13 @@ export class ChatListPage extends Page<ChatListPageProps> {
                 name: 'new-chat-button'
             }),
             new Button({
-                root: '[data-element="add-user-button"]',
-                title: 'Добавить пользователя',
+                root: '[data-element="delete-user-button"]',
+                title: 'Удалить пользователя',
                 name: 'delete-user-button'
             }),
             new Input({
-                root: '[data-element="new-chat-input"]',
-                placeholder: 'Введите название чата',
+                root: '[data-element="delete-user-input"]',
+                placeholder: 'Введите имя пользователя',
                 name: 'delete-user-input',
                 type: 'text',
             }),
