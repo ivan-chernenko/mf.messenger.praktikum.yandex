@@ -1,11 +1,16 @@
-import {defaultValidateFn, validateRepeatPassword} from "../../lib/validating/index";
+import {
+    defaultValidateFn,
+    validateRepeatPassword,
+} from '../../lib/validating';
 
-const validateRepeatNewPassword = validateRepeatPassword('[data-name="newPassword"]');
+const validateRepeatNewPassword = validateRepeatPassword(
+    '[data-name="newPassword"]',
+);
 
 export const schema = [
     {
         name: 'oldPassword',
-        fn: defaultValidateFn
+        fn: defaultValidateFn,
     },
     {
         name: 'newPassword',
@@ -13,6 +18,6 @@ export const schema = [
     },
     {
         name: 'repeatNewPassword',
-        fn: validateRepeatNewPassword
-    }
+        fn: validateRepeatNewPassword,
+    },
 ];

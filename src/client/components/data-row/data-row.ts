@@ -1,6 +1,7 @@
-import {Component} from '../../lib/component/index';
-import {DataRowProps} from './types';
-import {template} from './template';
+import { Component } from '../../lib/component';
+import { DataRowProps } from './types';
+import { template } from './template';
+import './data-row.less';
 
 export class DataRow extends Component<DataRowProps> {
     constructor(props: DataRowProps) {

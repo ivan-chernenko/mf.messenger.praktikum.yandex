@@ -1,6 +1,7 @@
-import {Component} from '../../lib/component/index';
-import {InputProps} from './types';
-import {template} from './template';
+import { Component } from '../../lib/component';
+import { InputProps } from './types';
+import { template } from './template';
+import './input.less';
 
 export class Input extends Component<InputProps> {
     constructor(props: InputProps) {
@@ -34,13 +35,11 @@ export class Input extends Component<InputProps> {
 
     onFocus = (e: FocusEvent) => {
         this.hideError();
-        if (this.props.onFocus)
-            this.props.onFocus(e);
+        if (this.props.onFocus) this.props.onFocus(e);
     };
 
     onBlur = (e: FocusEvent) => {
-        if (this.props.onBlur)
-            this.props.onBlur(e);
+        if (this.props.onBlur) this.props.onBlur(e);
     };
 
     componentDidRender() {
@@ -48,8 +47,7 @@ export class Input extends Component<InputProps> {
         if (input) {
             input.onfocus = this.onFocus;
             input.onblur = this.onBlur;
-            if (this.props.value)
-                input.value = this.props.value;
+            if (this.props.value) input.value = this.props.value;
         }
     }
 

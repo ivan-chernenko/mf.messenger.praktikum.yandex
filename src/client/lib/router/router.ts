@@ -1,24 +1,26 @@
-import {Route} from './route';
-import {Page} from "../page/index";
+import { Route } from './route';
+import { Page } from '../page';
 
 export class Router {
     static __instance: Router;
     private routes: Route[];
     private history: History;
     private currentRoute?: Route;
-    private readonly fallThrough: Route;
+    private readonly fallThrough?: Route;
 
-
-    constructor(fallThrough: new () => Page<unknown>) {
-        if (Router.__instance)
-            return Router.__instance;
-        this.fallThrough = new Route('', fallThrough);
+    constructor(fallThrough?: new () => Page<unknown>) {
+        if (Router.__instance) return Router.__instance;
+        if (fallThrough) this.fallThrough = new Route('', fallThrough);
         this.routes = [];
         this.history = window.history;
         Router.__instance = this;
     }
 
-    use<Props = unknown>(pathname: string, block: new () => Page<Props>, props?: Props): Router {
+    use<Props = unknown>(
+        pathname: string,
+        block: new () => Page<Props>,
+        props?: Props,
+    ): Router {
         const route = new Route(pathname, block, props);
         this.routes.push(route);
         return this;
@@ -31,13 +33,10 @@ export class Router {
 
     private onRoute(pathname: string) {
         const route = this.getRoute(pathname);
-        if (this.currentRoute)
-            this.currentRoute.leave();
-        if (route)
-            this.currentRoute = route;
-        else
-            this.currentRoute = this.fallThrough;
-        this.currentRoute.render();
+        if (this.currentRoute) this.currentRoute.leave();
+        if (route) this.currentRoute = route;
+        else this.currentRoute = this.fallThrough;
+        this.currentRoute?.render();
     }
 
     go(pathname: string) {

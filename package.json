@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server/index.js",
-    "test": "mocha -r jsdom-global/register",
-    "build": "tsc && node build.js"
+    "start:dev": "webpack serve",
+    "lint": "eslint src",
+    "format": "prettier src --write",
+    "test": "mocha",
+    "build": "webpack",
+    "build:watch": "webpack --watch"
   },
   "engines": {
     "node": "^14"
@@ -15,7 +19,7 @@
     "type": "git",
     "url": "git+https://github.com/ivan-chernenko/mf.messenger.praktikum.yandex.git"
   },
-  "author": "",
+  "author": "Chernenko Ivan",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ivan-chernenko/mf.messenger.praktikum.yandex/issues"
@@ -31,15 +35,31 @@
     "@babel/preset-typescript": "^7.12.16",
     "@babel/register": "^7.12.13",
     "@types/chai": "^4.2.15",
+    "@types/jsdom": "^16.2.6",
     "@types/lodash": "^4.14.168",
     "@types/mocha": "^8.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "chai": "^4.3.0",
+    "css-loader": "^5.0.2",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "husky": "^5.1.1",
+    "ignore-styles": "^5.0.1",
     "jsdom": "^16.4.0",
     "jsdom-global": "^3.0.2",
     "less": "^4.1.1",
+    "less-loader": "^8.0.0",
     "lodash": "^4.17.20",
     "mocha": "^8.3.0",
-    "ts-node": "^9.1.1"
+    "prettier": "^2.2.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.17",
+    "ts-node": "^9.1.1",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.24.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }

@@ -1,16 +1,19 @@
-import {RegisterPageProps} from './types';
-import {Input} from '../../components/input/index';
-import {Button} from '../../components/button/index';
-import {template} from './template';
-import {Link} from '../../components/link/index';
-import {Page} from '../../lib/page/index';
-import {RegisterData} from "../../api/login-api/index";
-import {router} from "../../configure";
-import {collectFormData} from "../../lib/collect-form-data/index";
-import {schema} from "./validating-schema";
-import {initValidating, validateInputs} from "../../lib/validating/index";
+import { RegisterPageProps } from './types';
+import { Input } from '../../components/input';
+import { Button } from '../../components/button';
+import { template } from './template';
+import { Link } from '../../components/link';
+import { Page } from '../../lib/page';
+import { RegisterData } from '../../api/login-api';
+import { collectFormData } from '../../lib/collect-form-data';
+import { schema } from './validating-schema';
+import { initValidating, validateInputs } from '../../lib/validating';
+import './register.less';
+import { Router } from '../../lib/router';
 
 export class RegisterPage extends Page<RegisterPageProps> {
+    private readonly router = new Router();
+
     constructor(props: RegisterPageProps) {
         super('register', props, [
             new Input({
@@ -86,34 +89,40 @@ export class RegisterPage extends Page<RegisterPageProps> {
                 root: '[data-element="register-link"]',
                 className: 'link register-form__link',
                 href: '/login',
-                title: 'Войти'
-            })
+                title: 'Войти',
+            }),
         ]);
     }
 
     register = () => {
-        const registerButton = this.children.find(ch => ch.getName() === 'register-button');
+        const registerButton = this.children.find(
+            ch => ch.getName() === 'register-button',
+        );
         const form = this.element.querySelector('form');
         if (!form || !registerButton || !validateInputs(this.children, schema))
             return;
         const data = collectFormData<RegisterData>(form);
-        registerButton.setProps({loading: true});
-        this.props.loginController.register(data)
+        registerButton.setProps({ loading: true });
+        this.props.loginController
+            .register(data)
             .then(this.registerSuccess)
             .catch(e => console.log(e))
-            .then(() => registerButton.setProps({loading: false}))
+            .then(() => registerButton.setProps({ loading: false }));
     };
 
     registerSuccess() {
-        router.go('/profile');
+        this.router.go('/profile');
     }
 
     componentDidRender() {
-        const registerButton = this.children.find(ch => ch.getName() === 'register-button');
+        const registerButton = this.children.find(
+            ch => ch.getName() === 'register-button',
+        );
         initValidating(this.children, schema);
-        if (!registerButton)
+        if (!registerButton) {
             return;
-        registerButton.setProps({onClick: this.register});
+        }
+        registerButton.setProps({ onClick: this.register });
     }
 
     render(): string {

@@ -1,1 +1,1 @@
-export {findEqualsElements} from './find-equals-elements/find-equals-elements';
+export { findEqualsElements } from './find-equals-elements/find-equals-elements';

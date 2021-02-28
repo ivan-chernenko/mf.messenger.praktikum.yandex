@@ -1,5 +1,5 @@
-import {ProfileController} from '../../controllers/profile-controller/index';
+import { ProfileController } from '../../controllers/profile-controller';
 
 export interface ChangeProfilePageProps {
-    profileController: ProfileController
+    profileController: ProfileController;
 }

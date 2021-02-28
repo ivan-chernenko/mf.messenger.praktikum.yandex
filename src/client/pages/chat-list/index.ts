@@ -1,2 +1,2 @@
-export {ChatListPage} from './chat-list';
-export {ChatListPageProps} from './types';
+export { ChatListPage } from './chat-list';
+export { ChatListPageProps } from './types';

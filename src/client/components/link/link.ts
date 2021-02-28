@@ -1,14 +1,17 @@
-import {Component} from "../../lib/component/index";
-import {LinkProps} from "./types";
-import {template} from "./template";
-import {router} from "../../configure";
+import { Component } from '../../lib/component';
+import { LinkProps } from './types';
+import { template } from './template';
+import './link.less';
+import { Router } from '../../lib/router';
 
-export class Link extends Component<LinkProps>{
+export class Link extends Component<LinkProps> {
+    private readonly router = new Router();
+
     constructor(props: LinkProps) {
         super(props.root, {
             ...props,
             className: props.className ?? '',
-            title: props.title ?? ''
+            title: props.title ?? '',
         });
     }
 
@@ -17,10 +20,12 @@ export class Link extends Component<LinkProps>{
         if (root) {
             root.addEventListener('click', event => {
                 event.preventDefault();
-                if (this.props.onClick)
+                if (this.props.onClick) {
                     this.props.onClick(event);
-                if (this.props.href)
-                    router.go(this.props.href);
+                }
+                if (this.props.href) {
+                    this.router.go(this.props.href);
+                }
             });
         }
     }

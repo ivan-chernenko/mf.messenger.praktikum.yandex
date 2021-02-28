@@ -1,1 +1,1 @@
-export {collectFormData} from './collect-form-data';
+export { collectFormData } from './collect-form-data';

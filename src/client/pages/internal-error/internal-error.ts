@@ -1,5 +1,5 @@
-import {template} from './template';
-import {Page} from '../../lib/page/index';
+import { template } from './template';
+import { Page } from '../../lib/page';
 
 export class InternalErrorPage extends Page<{}> {
     constructor() {

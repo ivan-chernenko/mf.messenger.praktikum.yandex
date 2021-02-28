@@ -1,6 +1,13 @@
-import {defaultValidateFn, validateEmail, validatePhone, validateRepeatPassword} from "../../lib/validating/index";
+import {
+    defaultValidateFn,
+    validateEmail,
+    validatePhone,
+    validateRepeatPassword,
+} from '../../lib/validating';
 
-const validateRegisterRepeatPassword = validateRepeatPassword('[data-name="password"]');
+const validateRegisterRepeatPassword = validateRepeatPassword(
+    '[data-name="password"]',
+);
 
 export const schema = [
     {

@@ -20,7 +20,7 @@ export interface DeleteChatResponse {
         id: number;
         title: string;
         avatar: string;
-    }
+    };
 }
 
 export interface GetUserByLoginRequest {
@@ -47,4 +47,3 @@ export interface DeleteUserFormChatRequest {
     users: number[];
     chatId: number;
 }
-

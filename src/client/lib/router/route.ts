@@ -1,11 +1,10 @@
-import {Page} from "../page/index";
+import { Page } from '../page';
 
 export class Route<Props = unknown> {
     block?: Page<unknown>;
     private readonly pathName: string;
     private readonly blockClass: new (props?: Props) => Page<Props>;
     private readonly props?: Props;
-
 
     constructor(
         pathName: string,
@@ -19,13 +18,11 @@ export class Route<Props = unknown> {
     }
 
     navigate(pathname: string) {
-        if (this.match(pathname))
-            this.render();
+        if (this.match(pathname)) this.render();
     }
 
     leave() {
-        if (this.block)
-            this.block.hide();
+        if (this.block) this.block.hide();
     }
 
     match(pathname: string) {
@@ -33,8 +30,7 @@ export class Route<Props = unknown> {
     }
 
     render() {
-        if (this.block)
-            this.block.show();
+        if (this.block) this.block.show();
         else {
             this.block = new this.blockClass(this.props);
             this.block.mount();

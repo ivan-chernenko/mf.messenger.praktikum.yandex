@@ -1,12 +1,14 @@
-import {HTTPTransport} from "../../lib/http-transport";
+import { HTTPTransport } from '../../lib/http-transport';
 import {
     AddUserToChatRequest,
     CreateChatRequest,
     DeleteChatRequest,
-    DeleteChatResponse, DeleteUserFormChatRequest,
+    DeleteChatResponse,
+    DeleteUserFormChatRequest,
     GetChatListResponse,
-    GetUserByLoginRequest, GetUserByLoginResponse
-} from "./types";
+    GetUserByLoginRequest,
+    GetUserByLoginResponse,
+} from './types';
 
 export class ChatListApi {
     private readonly baseUrl = 'https://ya-praktikum.tech/api/v2';
@@ -19,15 +21,18 @@ export class ChatListApi {
     createChat(data: CreateChatRequest) {
         return this.http.post(`${this.baseUrl}/chats`, {
             headers: this.headers,
-            data
+            data,
         });
     }
 
     getUserByLogin(data: GetUserByLoginRequest) {
-        return this.http.post<GetUserByLoginResponse>(`${this.baseUrl}/user/search`, {
-            data,
-            headers: this.headers,
-        });
+        return this.http.post<GetUserByLoginResponse>(
+            `${this.baseUrl}/user/search`,
+            {
+                data,
+                headers: this.headers,
+            },
+        );
     }
 
     addUser(data: AddUserToChatRequest) {

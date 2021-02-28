@@ -1,2 +1,2 @@
-export {LoginPageProps} from './types';
-export {LoginPage} from './login';
+export { LoginPageProps } from './types';
+export { LoginPage } from './login';

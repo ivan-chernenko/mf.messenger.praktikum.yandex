@@ -1,7 +1,9 @@
-import {router} from './configure';
+import { router } from './configure';
 
 declare global {
-    interface Window { _: any; }
+    interface Window {
+        _: any;
+    }
 }
 
 router.start();

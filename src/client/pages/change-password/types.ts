@@ -1,4 +1,4 @@
-import {ProfileController} from '../../controllers/profile-controller/index';
+import { ProfileController } from '../../controllers/profile-controller';
 
 export interface ChangePasswordProps {
     profileController: ProfileController;

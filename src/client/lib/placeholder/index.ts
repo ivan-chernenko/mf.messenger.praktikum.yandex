@@ -1,1 +1,1 @@
-export {placeholder} from './placeholder';
+export { placeholder } from './placeholder';

@@ -1,5 +1,5 @@
-import {findEqualsElements} from "../find-equals-elements";
-import {expect} from 'chai';
+import { findEqualsElements } from '../find-equals-elements';
+import { expect } from 'chai';
 
 describe('find equals elements', () => {
     it('zero length first array', () => {

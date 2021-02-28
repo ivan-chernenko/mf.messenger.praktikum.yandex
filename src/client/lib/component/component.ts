@@ -1,4 +1,4 @@
-import {isShallowEqual, PlainObject} from '../object-helpers/index';
+import { isShallowEqual, PlainObject } from '../object-helpers';
 
 interface MetaData {
     queryToMount: string;
@@ -7,14 +7,18 @@ interface MetaData {
 export abstract class Component<T> {
     protected element: HTMLElement;
     protected meta: MetaData;
-    protected props: T & {name?: string};
-    protected oldProps: T & {name?: string};
+    protected props: T & { name?: string };
+    protected oldProps: T & { name?: string };
     protected children: Component<unknown>[];
 
-    protected constructor(queryToMount: string, props: T, children?: Component<unknown>[]) {
+    protected constructor(
+        queryToMount: string,
+        props: T,
+        children?: Component<unknown>[],
+    ) {
         this.props = this.makePropsProxy(props);
-        this.oldProps = {...this.props, };
-        this.meta = {queryToMount};
+        this.oldProps = { ...this.props };
+        this.meta = { queryToMount };
         this.children = children ?? [];
     }
 
@@ -31,29 +35,32 @@ export abstract class Component<T> {
                 return true;
             },
             deleteProperty: (_: T, __: PropertyKey): boolean => {
-                throw new Error('Can\'t delete property from private props');
-            }
+                throw new Error("Can't delete property from private props");
+            },
         });
     }
 
     getContent() {
         return this.element;
-    };
+    }
 
     setProps(nextProps: Partial<T>) {
         if (!nextProps) {
             return;
         }
         this.props = Object.assign(this.props, nextProps);
-    };
+    }
 
     componentDidMount() {}
 
-    componentDidRender() {};
+    componentDidRender() {}
 
     shouldComponentUpdate(oldProps: T, newProps: T) {
-        return !isShallowEqual(oldProps as PlainObject, newProps as PlainObject);
-    };
+        return !isShallowEqual(
+            oldProps as PlainObject,
+            newProps as PlainObject,
+        );
+    }
 
     mount() {
         this._render();
@@ -82,25 +89,26 @@ export abstract class Component<T> {
     }
 
     private _render() {
-        const newElement = document.querySelector(this.meta.queryToMount) as HTMLElement;
-        if (newElement)
-            this.element = newElement;
+        const newElement = document.querySelector(
+            this.meta.queryToMount,
+        ) as HTMLElement;
+        if (newElement) this.element = newElement;
         this.updateContent();
-        this.oldProps = {...this.props};
+        this.oldProps = { ...this.props };
         this.children.forEach(c => c._render());
         this.componentDidRender();
-    };
+    }
 
     render(): string {
         return '';
-    };
+    }
 
     show() {
         this.element.style.removeProperty('display');
         this.componentDidMount();
-    };
+    }
 
     hide() {
         this.element.style.display = 'none';
-    };
+    }
 }

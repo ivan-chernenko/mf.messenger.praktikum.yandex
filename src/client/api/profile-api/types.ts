@@ -32,6 +32,4 @@ export interface ChangePasswordRequest {
     newPassword: string;
 }
 
-export interface ChangeAvatarRequest {
-
-}
+export interface ChangeAvatarRequest {}

@@ -1,4 +1,4 @@
-import {placeholder} from "../../lib/placeholder/index";
+import { placeholder } from '../../lib/placeholder';
 
 export const template = `
 <main class='content chat-list-page'>

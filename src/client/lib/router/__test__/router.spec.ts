@@ -1,15 +1,16 @@
-import {Router} from "../router";
-import {PageNotFound} from "../../../pages/page-not-found";
-import * as _ from "lodash";
-import {expect} from 'chai';
-import {InternalErrorPage} from "../../../pages/internal-error";
-import * as jsdom from "jsdom";
+import { Router } from '../router';
+import { PageNotFound } from '../../../pages/page-not-found';
+import * as _ from 'lodash';
+import { expect } from 'chai';
+import { InternalErrorPage } from '../../../pages/internal-error';
+import * as jsdom from 'jsdom';
 const { JSDOM } = jsdom;
 
 describe('router', () => {
     beforeEach(() => {
+        //@ts-ignore
         window = new JSDOM('', {
-            url: 'http://localhost:3000'
+            url: 'http://localhost:3000',
         }).window;
         window._ = _;
         const rootNode = document.createElement('div');
@@ -21,7 +22,7 @@ describe('router', () => {
         const router = new Router(PageNotFound);
         router.start();
         expect(document.querySelector('.content')).exist;
-        expect(document.querySelector('h1').textContent).eql('404');
+        expect(document.querySelector('h1')?.textContent).eql('404');
     });
 
     it('should mount correct page after go', () => {
@@ -29,10 +30,16 @@ describe('router', () => {
         router.use('/test', InternalErrorPage);
         router.start();
         router.go('/test');
-        expect(document.querySelector('.internal-error').textContent)
-            .eql('\n    500\n    Упс, ошибка сервера.\n');
-        expect((document.querySelector('.internal-error') as HTMLElement).style.display).eql('');
-        expect((document.querySelector('.not-found') as HTMLElement).style.display).eql('none');
+        expect(document.querySelector('.internal-error')?.textContent).eql(
+            '\n    500\n    Упс, ошибка сервера.\n',
+        );
+        expect(
+            (document.querySelector('.internal-error') as HTMLElement).style
+                .display,
+        ).eql('');
+        expect(
+            (document.querySelector('.not-found') as HTMLElement).style.display,
+        ).eql('none');
     });
 
     it('should mount correct page after forward and back', () => {
@@ -42,9 +49,15 @@ describe('router', () => {
         router.go('/test');
         router.back();
         router.forward();
-        expect(document.querySelector('.internal-error').textContent)
-            .eql('\n    500\n    Упс, ошибка сервера.\n');
-        expect((document.querySelector('.internal-error') as HTMLElement).style.display).eql('');
-        expect((document.querySelector('.not-found') as HTMLElement).style.display).eql('none');
+        expect(document.querySelector('.internal-error')?.textContent).eql(
+            '\n    500\n    Упс, ошибка сервера.\n',
+        );
+        expect(
+            (document.querySelector('.internal-error') as HTMLElement).style
+                .display,
+        ).eql('');
+        expect(
+            (document.querySelector('.not-found') as HTMLElement).style.display,
+        ).eql('none');
     });
 });

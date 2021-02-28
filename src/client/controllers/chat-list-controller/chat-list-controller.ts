@@ -1,4 +1,8 @@
-import {ChatListApi, CreateChatRequest, DeleteChatRequest} from "../../api/chat-list-api/index";
+import {
+    ChatListApi,
+    CreateChatRequest,
+    DeleteChatRequest,
+} from '../../api/chat-list-api';
 
 export class ChatListController {
     constructor(private readonly chatListApi: ChatListApi) {}
@@ -12,13 +16,19 @@ export class ChatListController {
     }
 
     deleteUser(chatId: number, login: string) {
-        return this.chatListApi.getUserByLogin({login})
-            .then(res => this.chatListApi.deleteUser({users: [res[0].id], chatId}))
+        return this.chatListApi
+            .getUserByLogin({ login })
+            .then(res =>
+                this.chatListApi.deleteUser({ users: [res[0].id], chatId }),
+            );
     }
 
     addUser(chatId: number, login: string) {
-        return this.chatListApi.getUserByLogin({login})
-            .then(res => this.chatListApi.addUser({users: [res[0].id], chatId}));
+        return this.chatListApi
+            .getUserByLogin({ login })
+            .then(res =>
+                this.chatListApi.addUser({ users: [res[0].id], chatId }),
+            );
     }
 
     deleteChat(data: DeleteChatRequest) {

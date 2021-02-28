@@ -1,9 +1,11 @@
-import {ProfileApi} from '../../api/profile-api/index';
-import {ChangePasswordRequest, ChangeProfileRequest} from "../../api/profile-api/index";
+import { ProfileApi } from '../../api/profile-api';
+import {
+    ChangePasswordRequest,
+    ChangeProfileRequest,
+} from '../../api/profile-api';
 
 export class ProfileController {
-    constructor(private readonly profileApi: ProfileApi) {
-    }
+    constructor(private readonly profileApi: ProfileApi) {}
 
     getProfile() {
         return this.profileApi.getProfile();

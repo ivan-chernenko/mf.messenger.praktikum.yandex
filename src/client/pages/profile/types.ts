@@ -1,5 +1,5 @@
-import {ProfileController} from '../../controllers/profile-controller/index';
-import {LoginController} from '../../controllers/login-controller/index';
+import { ProfileController } from '../../controllers/profile-controller';
+import { LoginController } from '../../controllers/login-controller';
 
 export interface ProfilePageProps {
     profileController: ProfileController;

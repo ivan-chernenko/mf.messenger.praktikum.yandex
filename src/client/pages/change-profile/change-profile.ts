@@ -1,17 +1,23 @@
-import {ChangeProfilePageProps} from './types';
-import {Input} from '../../components/input/index';
-import {Button} from '../../components/button/index';
-import {template} from './template';
-import {Page} from '../../lib/page/index';
-import {BackSection} from '../../components/back-section/index';
-import {ChangeProfileRequest, GetProfileResponse} from '../../api/profile-api/index';
-import {collectFormData} from "../../lib/collect-form-data/index";
-import {router} from "../../configure";
-import {ApiError} from "../../api/login-api/index";
-import {schema} from "./validating-schema";
-import {initValidating, validateInputs} from "../../lib/validating/index";
+import { ChangeProfilePageProps } from './types';
+import { Input } from '../../components/input';
+import { Button } from '../../components/button';
+import { template } from './template';
+import { Page } from '../../lib/page';
+import { BackSection } from '../../components/back-section';
+import {
+    ChangeProfileRequest,
+    GetProfileResponse,
+} from '../../api/profile-api';
+import { collectFormData } from '../../lib/collect-form-data';
+import { ApiError } from '../../api/login-api';
+import { schema } from './validating-schema';
+import { initValidating, validateInputs } from '../../lib/validating';
+import './change-profile.less';
+import { Router } from '../../lib/router';
 
 export class ChangeProfilePage extends Page<ChangeProfilePageProps> {
+    private readonly router = new Router();
+
     constructor(props: ChangeProfilePageProps) {
         super('change-profile', props, [
             new Input({
@@ -72,37 +78,41 @@ export class ChangeProfilePage extends Page<ChangeProfilePageProps> {
                 root: '[data-element="save-profile"]',
                 title: 'Сохранить',
                 className: 'change-profile-form__button',
-                name: 'change-profile-button'
+                name: 'change-profile-button',
             }),
             new BackSection({
                 root: '[data-element="change-profile-back"]',
-                href: '/profile'
-            })
+                href: '/profile',
+            }),
         ]);
     }
 
     changeProfile = (e: MouseEvent) => {
         const form = this.element.querySelector('form');
-        const button = this.children.find(ch => ch.getName() === 'change-profile-button');
+        const button = this.children.find(
+            ch => ch.getName() === 'change-profile-button',
+        );
         e.preventDefault();
-        if (!form || !button || !validateInputs(this.children, schema))
+        if (!form || !button || !validateInputs(this.children, schema)) {
             return;
-        button.setProps({loading: true});
+        }
+        button.setProps({ loading: true });
         const data = collectFormData<ChangeProfileRequest>(form);
-        this.props.profileController.changeProfile(data)
+        this.props.profileController
+            .changeProfile(data)
             .then(this.changeProfileSuccess)
             .catch(this.changeProfileFailed)
-            .then(() => button.setProps({loading: false}))
+            .then(() => button.setProps({ loading: false }));
     };
 
     changeProfileSuccess = () => {
-        router.go('/profile')
+        this.router.go('/profile');
     };
 
     changeProfileFailed = (err: ApiError) => {
-        if (err.reason === 'Cookie is not valid')
-            router.go('/login');
-        else {
+        if (err.reason === 'Cookie is not valid') {
+            this.router.go('/login');
+        } else {
             console.error(err);
         }
     };
@@ -114,35 +124,37 @@ export class ChangeProfilePage extends Page<ChangeProfilePageProps> {
             email,
             displayName,
             lastName,
-            phone
+            phone,
         ] = this.children;
-        email.setProps({value: res.email});
-        login.setProps({value: res.login});
-        firstName.setProps({value: res.first_name});
-        lastName.setProps({value: res.second_name});
-        displayName.setProps({value: res.display_name});
-        phone.setProps({value: res.phone});
+        email.setProps({ value: res.email });
+        login.setProps({ value: res.login });
+        firstName.setProps({ value: res.first_name });
+        lastName.setProps({ value: res.second_name });
+        displayName.setProps({ value: res.display_name });
+        phone.setProps({ value: res.phone });
     };
 
     getProfileFailed = (err: ApiError) => {
-        if (err.reason === 'Cookie is not valid')
-            router.go('/login');
-        else {
+        if (err.reason === 'Cookie is not valid') {
+            this.router.go('/login');
+        } else {
             console.error(err);
         }
     };
 
     getProfile() {
-        this.props.profileController.getProfile()
+        this.props.profileController
+            .getProfile()
             .then(this.getProfileSuccess)
-            .catch(this.getProfileFailed)
+            .catch(this.getProfileFailed);
     }
 
     componentDidRender() {
-        const button = this.children.find(ch => ch.getName() === 'change-profile-button');
-        if (!button)
-            return;
-        button.setProps({onClick: this.changeProfile});
+        const button = this.children.find(
+            ch => ch.getName() === 'change-profile-button',
+        );
+        if (!button) return;
+        button.setProps({ onClick: this.changeProfile });
     }
 
     componentDidMount() {

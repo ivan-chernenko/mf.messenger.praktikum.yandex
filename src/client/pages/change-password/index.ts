@@ -1,2 +1,2 @@
-export {ChangePasswordPage} from './change-password';
-export {ChangePasswordProps} from './types';
+export { ChangePasswordPage } from './change-password';
+export { ChangePasswordProps } from './types';

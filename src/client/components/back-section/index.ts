@@ -1,1 +1,1 @@
-export {BackSection} from './back-section';
+export { BackSection } from './back-section';

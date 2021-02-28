@@ -1,7 +1,11 @@
-import {Component} from "../component/index";
+import { Component } from '../component';
 
 export class Page<PageProps = unknown> extends Component<PageProps> {
-    constructor(pageName: string, props: PageProps, children?: Component<unknown>[]) {
+    constructor(
+        pageName: string,
+        props: PageProps,
+        children?: Component<unknown>[],
+    ) {
         const root = document.createElement('div');
         root.classList.add(pageName);
         document.querySelector('.app')?.appendChild(root);

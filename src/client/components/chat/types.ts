@@ -1,4 +1,4 @@
-import {ChatListController} from "../../controllers/chat-list-controller/index";
+import { ChatListController } from '../../controllers/chat-list-controller';
 
 export interface ChatProps {
     id: number;

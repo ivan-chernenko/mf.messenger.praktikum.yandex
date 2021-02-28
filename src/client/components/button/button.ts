@@ -1,6 +1,6 @@
-import {Component} from '../../lib/component/index';
-import {ButtonProps} from './types';
-import {template} from './template';
+import { Component } from '../../lib/component';
+import { ButtonProps } from './types';
+import { template } from './template';
 
 export class Button extends Component<ButtonProps> {
     constructor(props: ButtonProps) {
@@ -15,13 +15,11 @@ export class Button extends Component<ButtonProps> {
         const button = this.getContent();
         const loader = button.querySelector('.button__loader');
         const buttonText = button.firstChild;
-        if (!loader || !buttonText)
-            return;
+        if (!loader || !buttonText) return;
         if (this.props.loading) {
-            buttonText.textContent =  '';
+            buttonText.textContent = '';
             loader.classList.add('button__loader_visible');
-        }
-        else {
+        } else {
             loader.classList.remove('button__loader_visible');
             buttonText.textContent = this.props.title;
         }
@@ -30,8 +28,7 @@ export class Button extends Component<ButtonProps> {
     onClick = (e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        if (this.props.onClick)
-            this.props.onClick(e);
+        if (this.props.onClick) this.props.onClick(e);
     };
 
     componentDidRender() {

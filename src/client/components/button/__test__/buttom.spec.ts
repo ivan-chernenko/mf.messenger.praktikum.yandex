@@ -1,9 +1,8 @@
-import {Button} from "../button";
-import {expect} from 'chai';
-import {template} from "../template";
-import * as _ from "lodash";
-import * as jsdom from "jsdom";
-const {JSDOM} = jsdom;
+import { Button } from '../button';
+import { expect } from 'chai';
+import { template } from '../template';
+import * as _ from 'lodash';
+import { JSDOM } from 'jsdom';
 
 describe('button', () => {
     it('render should return template as string', () => {
@@ -17,8 +16,9 @@ describe('button', () => {
     });
 
     it('mount should mount component in placeholder', () => {
+        // @ts-ignore
         window = new JSDOM('', {
-            url: 'http://localhost:3000'
+            url: 'http://localhost:3000',
         }).window;
         window._ = _;
         const rootNode = document.createElement('div');
@@ -34,7 +34,7 @@ describe('button', () => {
         });
         button.mount();
         const buttonNode = document.querySelector('.button');
-        expect(document.querySelector('.app').firstChild).eql(buttonNode);
+        expect(document.querySelector('.app')?.firstChild).eql(buttonNode);
     });
 
     //todo: тесты на onclick, hide, show, loading

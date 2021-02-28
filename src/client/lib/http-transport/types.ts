@@ -9,7 +9,7 @@ export interface Options<Data = unknown> {
     method: Methods;
     data?: Data;
     timeout?: number;
-    headers?: {[key: string]: string};
+    headers?: { [key: string]: string };
 }
 
 export type OptionsWithoutMethod = Omit<Options, 'method'>;

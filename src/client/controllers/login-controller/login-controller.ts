@@ -1,8 +1,7 @@
-import {LoginApi, LoginData, RegisterData} from '../../api/login-api/index';
+import { LoginApi, LoginData, RegisterData } from '../../api/login-api';
 
 export class LoginController {
-    constructor(private readonly loginApi: LoginApi) {
-    }
+    constructor(private readonly loginApi: LoginApi) {}
 
     login(data: LoginData) {
         return this.loginApi.login(data);

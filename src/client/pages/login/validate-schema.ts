@@ -1,12 +1,12 @@
-import {defaultValidateFn} from "../../lib/validating/index";
+import { defaultValidateFn } from '../../lib/validating';
 
 export const schema = [
     {
         name: 'login',
-        fn: defaultValidateFn
+        fn: defaultValidateFn,
     },
     {
         name: 'password',
-        fn: defaultValidateFn
-    }
+        fn: defaultValidateFn,
+    },
 ];

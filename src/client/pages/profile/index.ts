@@ -1,2 +1,2 @@
-export {ProfilePage} from './profile';
-export {ProfilePageProps} from './types';
+export { ProfilePage } from './profile';
+export { ProfilePageProps } from './types';

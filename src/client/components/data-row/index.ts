@@ -1,1 +1,1 @@
-export {DataRow} from './data-row';
+export { DataRow } from './data-row';

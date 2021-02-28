@@ -1,6 +1,6 @@
-import {template} from './template';
-import {Page} from '../../lib/page/index';
-import {Link} from "../../components/link/index";
+import { template } from './template';
+import { Page } from '../../lib/page';
+import { Link } from '../../components/link';
 
 export class PageNotFound extends Page<{}> {
     constructor() {
@@ -8,8 +8,8 @@ export class PageNotFound extends Page<{}> {
             new Link({
                 root: '[data-element="not-found-return-link"]',
                 href: '/profile',
-                title: 'Вернуться в профиль'
-            })
+                title: 'Вернуться в профиль',
+            }),
         ]);
     }
 

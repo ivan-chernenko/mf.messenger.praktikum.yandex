@@ -1,4 +1,4 @@
-import {LoginController} from '../../controllers/login-controller/index';
+import { LoginController } from '../../controllers/login-controller';
 
 export interface LoginPageProps {
     loginController: LoginController;

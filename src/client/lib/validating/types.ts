@@ -1,6 +1,6 @@
-import {Input} from "../../components/input/index";
+import { Input } from '../../components/input';
 
 export type Schema = {
-    name: string,
-    fn: (input: Input) => boolean,
+    name: string;
+    fn: (input: Input) => boolean;
 }[];

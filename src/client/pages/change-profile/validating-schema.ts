@@ -1,4 +1,8 @@
-import {defaultValidateFn, validateEmail, validatePhone} from "../../lib/validating/index";
+import {
+    defaultValidateFn,
+    validateEmail,
+    validatePhone,
+} from '../../lib/validating';
 
 export const schema = [
     {
