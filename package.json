@@ -21,14 +21,9 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm-run-all format lint test"
     }
   },
-  "lint-staged": [
-    "npm run format",
-    "npm run lint",
-    "npm run test"
-  ],
   "author": "Chernenko Ivan",
   "license": "ISC",
   "bugs": {
@@ -55,7 +50,7 @@
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "husky": "^5.1.1",
+    "husky": "^4.1.1",
     "ignore-styles": "^5.0.1",
     "jsdom": "^16.4.0",
     "jsdom-global": "^3.0.2",
@@ -63,6 +58,7 @@
     "less-loader": "^8.0.0",
     "lodash": "^4.17.20",
     "mocha": "^8.3.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.17",
