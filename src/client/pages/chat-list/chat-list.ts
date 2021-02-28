@@ -65,8 +65,7 @@ export class ChatListPage extends Page<ChatListPageProps> {
     deleteOrAddUserFailed(err: ApiError) {
         if (err.reason === 'Cookie is not valid') {
             this.router.go('/login');
-        }
-        else {
+        } else {
             console.error(err);
         }
     }
@@ -116,8 +115,7 @@ export class ChatListPage extends Page<ChatListPageProps> {
     getChatsFailed = (err: ApiError) => {
         if (err.reason === 'Cookie is not valid') {
             this.router.go('/login');
-        }
-        else {
+        } else {
             console.error(err);
         }
     };
@@ -125,8 +123,7 @@ export class ChatListPage extends Page<ChatListPageProps> {
     createChatFailed = (err: ApiError) => {
         if (err.reason === 'Cookie is not valid') {
             this.router.go('/login');
-        }
-        else {
+        } else {
             console.error(err);
         }
     };

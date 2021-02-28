@@ -19,6 +19,16 @@
     "type": "git",
     "url": "git+https://github.com/ivan-chernenko/mf.messenger.praktikum.yandex.git"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": [
+    "npm run format",
+    "npm run lint",
+    "npm run test"
+  ],
   "author": "Chernenko Ivan",
   "license": "ISC",
   "bugs": {

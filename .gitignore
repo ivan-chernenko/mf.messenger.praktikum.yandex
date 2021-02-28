@@ -1,12 +1,3 @@
 .idea
 node_modules
-static/pages
-static/lib
-static/components
-static/api
-static/controllers
-static/common
-static/index.js
-static/index.js.map
-static/configure.js
-static/configure.js.map
+static/bundle.js

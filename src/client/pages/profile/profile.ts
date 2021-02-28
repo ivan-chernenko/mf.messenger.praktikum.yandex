@@ -13,7 +13,6 @@ export class ProfilePage extends Page<ProfilePageProps> {
     private readonly baseUrl = 'https://ya-praktikum.tech';
     private readonly router = new Router();
 
-
     constructor(props: ProfilePageProps) {
         super('profile', props, [
             new DataRow({
@@ -86,8 +85,7 @@ export class ProfilePage extends Page<ProfilePageProps> {
     changeAvatarFailed = (err: ApiError) => {
         if (err.reason === 'Cookie is not valid') {
             this.router.go('/login');
-        }
-        else {
+        } else {
             console.error(err);
         }
     };
@@ -191,8 +189,7 @@ export class ProfilePage extends Page<ProfilePageProps> {
     getProfileFailed = (err: ApiError) => {
         if (err.reason === 'Cookie is not valid') {
             this.router.go('/login');
-        }
-        else {
+        } else {
             console.error(err);
         }
     };

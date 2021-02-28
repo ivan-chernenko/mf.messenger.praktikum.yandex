@@ -57,8 +57,9 @@ export class LoginPage extends Page<LoginPageProps> {
         if (!password) /**/ return;
         if (err.reason === 'user already in system') {
             this.router.go('/profile');
+        } else {
+            (password as Input).showError();
         }
-        else (password as Input).showError();
     };
 
     login = () => {
@@ -72,8 +73,9 @@ export class LoginPage extends Page<LoginPageProps> {
             !password ||
             !loginButton ||
             !validateInputs(this.children, schema)
-        )
+        ) {
             return;
+        }
         const data = collectFormData<LoginData>(form);
         loginButton.setProps({ loading: true });
         this.props.loginController
