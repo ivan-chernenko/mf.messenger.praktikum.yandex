@@ -27,7 +27,7 @@ import './common/styles/form.less';
 
 const router = new Router(PageNotFound);
 
-const http = new HTTPTransport();
+const http = new HTTPTransport('https://ya-praktikum.tech/api/v2/');
 
 const loginApi = new LoginApi(http);
 const loginController = new LoginController(loginApi);

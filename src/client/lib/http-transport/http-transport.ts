@@ -5,16 +5,17 @@ import { PlainObject } from '../object-helpers';
 export class HTTPTransport {
     static DEFAULT_TIMEOUT = 30000;
 
+    constructor(private readonly baseUrl: string) {}
+
     private tryParseResponse = <ResponseType extends {}>(
         response: string,
     ): ResponseType => {
-        let parsedResponse = {} as ResponseType;
         try {
-            parsedResponse = JSON.parse(response);
+            const parsedResponse = JSON.parse(response);
+            return parsedResponse;
         } catch (err) {
-            console.log("can't parse response");
+            throw new Error("can't parse response");
         }
-        return parsedResponse;
     };
 
     get<ResponseType = unknown>(
@@ -69,19 +70,23 @@ export class HTTPTransport {
             const urlWithStringQuery = queryStringify(
                 options.data as PlainObject,
             );
-            xhr.open(options.method, urlWithStringQuery);
-        } else xhr.open(options.method, url);
+            xhr.open(options.method, `${this.baseUrl}${url}${urlWithStringQuery}`);
+        } else {
+            xhr.open(options.method, `${this.baseUrl}${url}`);
+        }
     }
 
     private send(xhr: XMLHttpRequest, options: Options) {
-        if (options.data === undefined || options.method === Methods.GET)
+        if (options.data === undefined || options.method === Methods.GET) {
             xhr.send();
-        else if (
+        } else if (
             options.headers &&
             options.headers['Content-Type'].includes('application/json')
-        )
+        ) {
             xhr.send(JSON.stringify(options.data));
-        else xhr.send(options.data as FormData);
+        } else {
+            xhr.send(options.data as FormData);
+        }
     }
 
     private addListeners<ResponseType>(
@@ -90,8 +95,9 @@ export class HTTPTransport {
         reject: (reason?: any) => void,
     ) {
         xhr.onload = () => {
-            if (xhr.status === 200) resolve(xhr.response);
-            else {
+            if (200 <= xhr.status && xhr.status < 300) {
+                resolve(xhr.response);
+            } else {
                 let response = xhr.response;
                 if (typeof xhr.response === 'string') {
                     try {

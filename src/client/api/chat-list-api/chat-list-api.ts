@@ -11,7 +11,6 @@ import {
 } from './types';
 
 export class ChatListApi {
-    private readonly baseUrl = 'https://ya-praktikum.tech/api/v2';
     private readonly headers = {
         'Content-Type': 'application/json;charset=UTF-8',
     };
@@ -19,7 +18,7 @@ export class ChatListApi {
     constructor(private readonly http: HTTPTransport) {}
 
     createChat(data: CreateChatRequest) {
-        return this.http.post(`${this.baseUrl}/chats`, {
+        return this.http.post('chats', {
             headers: this.headers,
             data,
         });
@@ -27,7 +26,7 @@ export class ChatListApi {
 
     getUserByLogin(data: GetUserByLoginRequest) {
         return this.http.post<GetUserByLoginResponse>(
-            `${this.baseUrl}/user/search`,
+            'user/search',
             {
                 data,
                 headers: this.headers,
@@ -36,25 +35,25 @@ export class ChatListApi {
     }
 
     addUser(data: AddUserToChatRequest) {
-        return this.http.put(`${this.baseUrl}/chats/users`, {
+        return this.http.put('chats/users', {
             data,
             headers: this.headers,
         });
     }
 
     deleteUser(data: DeleteUserFormChatRequest) {
-        return this.http.delete(`${this.baseUrl}/chats/users`, {
+        return this.http.delete('chats/users', {
             data,
             headers: this.headers,
         });
     }
 
     getChatList() {
-        return this.http.get<GetChatListResponse>(`${this.baseUrl}/chats`);
+        return this.http.get<GetChatListResponse>('chats');
     }
 
     deleteChat(data: DeleteChatRequest) {
-        return this.http.delete<DeleteChatResponse>(`${this.baseUrl}/chats`, {
+        return this.http.delete<DeleteChatResponse>('chats', {
             data,
             headers: this.headers,
         });

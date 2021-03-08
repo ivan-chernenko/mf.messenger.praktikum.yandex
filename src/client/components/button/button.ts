@@ -1,6 +1,7 @@
 import { Component } from '../../lib/component';
 import { ButtonProps } from './types';
 import { template } from './template';
+import './button.less';
 
 export class Button extends Component<ButtonProps> {
     constructor(props: ButtonProps) {

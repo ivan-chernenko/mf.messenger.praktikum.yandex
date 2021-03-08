@@ -5,15 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server/index.js",
-    "start:dev": "webpack serve",
     "lint": "eslint src",
     "format": "prettier src --write",
     "test": "mocha",
-    "build": "webpack",
-    "build:watch": "webpack --watch"
+    "build": "webpack --config webpack.prod.js",
+    "build:watch": "webpack --watch --config webpack.dev.js"
   },
   "engines": {
-    "node": "^14"
+    "node": "v14.9.0"
   },
   "repository": {
     "type": "git",
@@ -61,11 +60,11 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "style-loader": "^2.0.0",
+    "terser-webpack-plugin": "^5.1.1",
     "ts-loader": "^8.0.17",
     "ts-node": "^9.1.1",
     "url-loader": "^4.1.1",
     "webpack": "^5.24.1",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-cli": "^4.5.0"
   }
 }

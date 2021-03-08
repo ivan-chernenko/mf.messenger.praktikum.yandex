@@ -2,7 +2,6 @@ import { HTTPTransport } from '../../lib/http-transport';
 import { LoginData, RegisterData } from './types';
 
 export class LoginApi {
-    private readonly baseUrl = 'https://ya-praktikum.tech/api/v2/auth';
     private readonly headers = {
         'Content-Type': 'application/json;charset=UTF-8',
     };
@@ -10,21 +9,18 @@ export class LoginApi {
     constructor(private readonly http: HTTPTransport) {}
 
     login(data: LoginData) {
-        const url = `${this.baseUrl}/signin`;
-        return this.http.post(url, {
+        return this.http.post('auth/signin', {
             data,
             headers: this.headers,
         });
     }
 
     logOut() {
-        const url = `${this.baseUrl}/logout`;
-        return this.http.post(url);
+        return this.http.post('auth/logout');
     }
 
     register(data: RegisterData) {
-        const url = `${this.baseUrl}/signup`;
-        return this.http.post(url, {
+        return this.http.post('auth/signup', {
             data,
             headers: this.headers,
         });
