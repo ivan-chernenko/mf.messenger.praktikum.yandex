@@ -1,4 +1,5 @@
 import { isShallowEqual, PlainObject } from '../object-helpers';
+import * as _ from 'lodash';
 
 interface MetaData {
     queryToMount: string;
@@ -68,7 +69,7 @@ export abstract class Component<T> {
     }
 
     private templateContent() {
-        const templateExecutor = window._.template(this.render());
+        const templateExecutor = _.template(this.render());
         return templateExecutor(this.props).trim();
     }
 
