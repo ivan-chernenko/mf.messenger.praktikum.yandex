@@ -74,6 +74,8 @@ router
         {
             chatListController,
             chats: [],
+            messages: [],
+            selectedChat: undefined,
         },
     );
 

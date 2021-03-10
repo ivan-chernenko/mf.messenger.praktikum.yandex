@@ -18,39 +18,13 @@ export const template = `
         ${placeholder('new-chat-input')}
         ${placeholder('new-chat-button')}
         <% _.each(chats, function(chat){ %>
-            <div data-element='chat-<%- chat.id%>'></div>
+            <div data-element='chat-<%- chat.id %>'></div>
         <% }); %>
         </ul>
     </section>
     <section class='selected-chat'>
-        <div class='selected-chat__header'>
-            <div class='selected-chat__add-user'>
-                ${placeholder('add-user-input')}
-                ${placeholder('add-user-button')}
-            </div>
-            <div class='selected-chat__remove-user'>
-                 ${placeholder('delete-user-input')}
-                 ${placeholder('delete-user-button')}
-            </div>
-        </div>
-        
-        <div class='selected-chat__messages'>
-        </div>
-        <form class='selected-chat__new-message-form'>
-            <button class='selected-chat__attach-button'>
-            </button>
-            <label class='selected-chat__new-message-input-label'>
-                <input
-                        class='selected-chat__new-message-input'
-                        placeholder='Начните писать новое сообщение...'
-                />
-            </label>
-            <button
-                    type='submit'
-                    class='selected-chat__send-message'
-            >
-            </button>
-        </form>
+       <div class="empty-selected-chat">Выберите чат</div>
+       ${placeholder('selected-chat')}
     </section>
 </main>
 `;

@@ -50,16 +50,20 @@
 .selected-chat {
     width: calc(100vw - 320px);
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &__header {
         height: 80px;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
     }
 
     &__messages {
         width: 100%;
         height: calc(100% - 120px);
+        overflow-y: auto;
     }
 
     &__new-message-form {

@@ -27,7 +27,7 @@ export interface GetUserByLoginRequest {
     login: string;
 }
 
-export type GetUserByLoginResponse = {
+export interface GetUserResponse {
     id: number;
     login: string;
     avatar: string;
@@ -36,7 +36,9 @@ export type GetUserByLoginResponse = {
     display_name: string;
     email: string;
     phone: string;
-}[];
+}
+
+export type GetUserByLoginResponse = GetUserResponse[];
 
 export interface AddUserToChatRequest {
     users: number[];
@@ -46,4 +48,13 @@ export interface AddUserToChatRequest {
 export interface DeleteUserFormChatRequest {
     users: number[];
     chatId: number;
+}
+
+export interface GetTokenResponse {
+    token: string;
+}
+
+export enum MessagesType {
+    UserConnected,
+    Message,
 }

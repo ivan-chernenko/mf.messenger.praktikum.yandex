@@ -4,4 +4,5 @@ export {
     DeleteChatResponse,
     GetChatListResponse,
     DeleteChatRequest,
+    GetTokenResponse,
 } from './types';

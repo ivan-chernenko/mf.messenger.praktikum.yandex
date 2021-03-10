@@ -54,7 +54,9 @@ export class LoginPage extends Page<LoginPageProps> {
 
     loginFailed = (err: ApiError) => {
         const password = this.children.find(ch => ch.getName() === 'password');
-        if (!password) /**/ return;
+        if (!password) {
+            return;
+        }
         if (err.reason === 'user already in system') {
             this.router.go('/profile');
         } else {

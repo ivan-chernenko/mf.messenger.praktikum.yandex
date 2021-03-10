@@ -1,0 +1,32 @@
+.message {
+    width: 100%;
+    display: flex;
+    margin-top: 8px;
+
+    &:last-child {
+        margin-bottom: 8px;
+    }
+
+    &_left {
+        margin-left: 8px;
+    }
+
+    &_right {
+        flex-direction: row-reverse;
+        margin-right: 8px;
+    }
+
+    &__body {
+        border-radius: 4px;
+        padding: 8px;
+        border: 1px solid #5e6ad2;
+        max-width: 150px;
+        min-height: 24px;
+        min-width: 48px;
+    }
+
+    &__from {
+        color: #5e6ad2;
+        margin-bottom: 4px;
+    }
+}

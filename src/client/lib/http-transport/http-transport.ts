@@ -11,6 +11,7 @@ export class HTTPTransport {
         response: string,
     ): ResponseType => {
         try {
+            if (response === 'OK') return {} as ResponseType;
             const parsedResponse = JSON.parse(response);
             return parsedResponse;
         } catch (err) {
@@ -70,7 +71,10 @@ export class HTTPTransport {
             const urlWithStringQuery = queryStringify(
                 options.data as PlainObject,
             );
-            xhr.open(options.method, `${this.baseUrl}${url}${urlWithStringQuery}`);
+            xhr.open(
+                options.method,
+                `${this.baseUrl}${url}${urlWithStringQuery}`,
+            );
         } else {
             xhr.open(options.method, `${this.baseUrl}${url}`);
         }

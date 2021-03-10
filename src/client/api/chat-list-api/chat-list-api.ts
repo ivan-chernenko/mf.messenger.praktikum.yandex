@@ -6,9 +6,12 @@ import {
     DeleteChatResponse,
     DeleteUserFormChatRequest,
     GetChatListResponse,
+    GetTokenResponse,
     GetUserByLoginRequest,
     GetUserByLoginResponse,
+    GetUserResponse,
 } from './types';
+import { GetProfileResponse } from '../profile-api';
 
 export class ChatListApi {
     private readonly headers = {
@@ -24,14 +27,15 @@ export class ChatListApi {
         });
     }
 
+    getUserById(id: number) {
+        return this.http.get<GetUserResponse>(`user/${id}`);
+    }
+
     getUserByLogin(data: GetUserByLoginRequest) {
-        return this.http.post<GetUserByLoginResponse>(
-            'user/search',
-            {
-                data,
-                headers: this.headers,
-            },
-        );
+        return this.http.post<GetUserByLoginResponse>('user/search', {
+            data,
+            headers: this.headers,
+        });
     }
 
     addUser(data: AddUserToChatRequest) {
@@ -57,5 +61,15 @@ export class ChatListApi {
             data,
             headers: this.headers,
         });
+    }
+
+    getToken(id: number) {
+        return this.http.post<GetTokenResponse>(`chats/token/${id}`, {
+            headers: this.headers,
+        });
+    }
+
+    getUser() {
+        return this.http.get<GetProfileResponse>('auth/user');
     }
 }

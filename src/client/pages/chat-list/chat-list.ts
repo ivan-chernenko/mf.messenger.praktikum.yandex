@@ -9,8 +9,7 @@ import { ChatDAO } from '../../api/chat-list-api/types';
 import { ApiError } from '../../api/login-api';
 import './chat-list.less';
 import { Router } from '../../lib/router';
-
-//todo: нормальный интерфейс для выбранного чата, добавления и удаления пользователей из чата
+import { SelectedChat } from '../../components/selected-chat';
 
 export class ChatListPage extends Page<ChatListPageProps> {
     private readonly router = new Router();
@@ -19,17 +18,6 @@ export class ChatListPage extends Page<ChatListPageProps> {
         super('chat-list-page', props, [
             ...props.chats.map(chat => {
                 return new Chat(chat);
-            }),
-            new Input({
-                root: '[data-element="add-user-input"]',
-                placeholder: 'Введите имя пользователя',
-                name: 'add-user-input',
-                type: 'text',
-            }),
-            new Button({
-                root: '[data-element="add-user-button"]',
-                title: 'Добавить пользователя',
-                name: 'add-user-button',
             }),
             new Input({
                 root: '[data-element="new-chat-input"]',
@@ -42,73 +30,115 @@ export class ChatListPage extends Page<ChatListPageProps> {
                 title: 'Создать новый чат',
                 name: 'new-chat-button',
             }),
-            new Button({
-                root: '[data-element="delete-user-button"]',
-                title: 'Удалить пользователя',
-                name: 'delete-user-button',
-            }),
-            new Input({
-                root: '[data-element="delete-user-input"]',
-                placeholder: 'Введите имя пользователя',
-                name: 'delete-user-input',
-                type: 'text',
-            }),
             new Link({
                 root: '[data-element="chat-list-profile-link"]',
                 href: '/profile',
                 title: 'Профиль',
                 className: 'navigation__link',
             }),
+            new SelectedChat({
+                root: '[data-element="selected-chat"]',
+                messages: [],
+                chatListController: props.chatListController,
+                name: 'selected-chat',
+            }),
         ]);
     }
 
-    deleteOrAddUserFailed(err: ApiError) {
-        if (err.reason === 'Cookie is not valid') {
-            this.router.go('/login');
-        } else {
-            console.error(err);
-        }
+    onCreateSocket(socket: WebSocket, chatId: number, userId: number) {
+        this.openSelectedChat(userId, chatId, socket);
+        socket.addEventListener('open', () => this.onSocketOpen(socket));
+        socket.addEventListener('close', this.onSocketClose);
+        socket.addEventListener('message', this.onGetNewMessage);
     }
 
-    deleteUser = () => {
-        const login = this.getContent().querySelector(
-            '[data-name="delete-user-input"]',
+    openSelectedChat(userId: number, chatId: number, socket: WebSocket) {
+        const selectedChat = this.children.find(
+            ch => ch.getName() === 'selected-chat',
         );
-        if (login && this.props.selectedChat)
-            this.props.chatListController
-                .deleteUser(
+        if (!selectedChat) return;
+        selectedChat.setProps({
+            selectedChat: chatId,
+            userId,
+            socket,
+        });
+    }
+
+    onSocketOpen(socket: WebSocket) {
+        socket.send(
+            JSON.stringify({
+                content: 0,
+                type: 'get old',
+            }),
+        );
+    }
+
+    onSocketClose = (event: CloseEvent) => {
+        if (!event.wasClean) {
+            if (this.props.selectedChat !== undefined) {
+                this.connectToSocket(
                     this.props.selectedChat,
-                    (login as HTMLInputElement).value,
-                )
-                .catch(this.deleteOrAddUserFailed);
+                ).then(({ socket }) => this.onReconnectToSocket(socket));
+            }
+        }
     };
 
-    addUser = () => {
-        const login = this.getContent().querySelector(
-            '[data-name="add-user-input"]',
+    onGetNewMessage = (event: MessageEvent<string>) => {
+        const selectedChat = this.children.find(
+            ch => ch.getName() === 'selected-chat',
         );
-        if (login && this.props.selectedChat)
-            this.props.chatListController
-                .addUser(
-                    this.props.selectedChat,
-                    (login as HTMLInputElement).value,
-                )
-                .catch(this.deleteOrAddUserFailed);
+        if (!selectedChat) {
+            return;
+        }
+        const parsedData = JSON.parse(event.data);
+        if (parsedData.type !== 'user connected') {
+            (selectedChat as SelectedChat).onGetNewMessages(parsedData);
+        }
     };
+
+    async onChatClick(chatId: number) {
+        const selectedChat = this.children.find(
+            ch => ch.getName() === 'selected-chat',
+        );
+        if (selectedChat) {
+            (selectedChat as SelectedChat).clear();
+        }
+        const { socket, id } = await this.connectToSocket(chatId);
+        this.onCreateSocket(socket, chatId, id);
+        this.setProps({
+            selectedChat: chatId,
+        });
+    }
 
     mapChatDAO = (chatDAO: ChatDAO): ChatProps => ({
         chatName: chatDAO.title,
         id: chatDAO.id,
         root: `[data-element="chat-${chatDAO.id}"]`,
         chatListController: this.props.chatListController,
-        onClick: () => this.setProps({ selectedChat: chatDAO.id }),
+        onClick: () => this.onChatClick(chatDAO.id),
         deleteChatSuccessCallback: this.getChats,
     });
+
+    onReconnectToSocket = (socket: WebSocket) => {
+        const selectedChat = this.children.find(
+            ch => ch.getName() === 'selected-chat',
+        );
+        if (!selectedChat) {
+            return;
+        }
+        socket.addEventListener('close', this.onSocketClose);
+        socket.addEventListener('message', this.onGetNewMessage);
+        (selectedChat as SelectedChat).setProps({ socket });
+    };
+
+    connectToSocket = async (chatId: number) => {
+        return this.props.chatListController.connectToChatWS(chatId);
+    };
 
     getChats = () => {
         this.props.chatListController
             .getChatList()
-            .then(this.getChatSuccess)
+            .then(this.getChatsSuccess)
             .catch(this.getChatsFailed);
     };
 
@@ -128,19 +158,19 @@ export class ChatListPage extends Page<ChatListPageProps> {
         }
     };
 
-    getChatSuccess = (res: ChatDAO[]) => {
+    getChatsSuccess = (res: ChatDAO[]) => {
         const chats = res.map(this.mapChatDAO);
         this.children = [...this.children, ...chats.map(ch => new Chat(ch))];
-        if (chats.length > 0)
-            this.setProps({ chats, selectedChat: chats[0].id });
-        else this.setProps({ chats });
+        this.setProps({ chats });
     };
 
     createChat = () => {
         const createChatInput = this.getContent().querySelector(
             '[data-name="new-chat-input"]',
         );
-        if (!createChatInput) return;
+        if (!createChatInput) {
+            return;
+        }
         this.props.chatListController
             .createChat({ title: (createChatInput as HTMLInputElement).value })
             .then(this.getChats)
@@ -155,16 +185,16 @@ export class ChatListPage extends Page<ChatListPageProps> {
         const createChatButton = this.children.find(
             ch => ch.getName() === 'new-chat-button',
         );
-        const addUserButton = this.children.find(
-            ch => ch.getName() === 'add-user-button',
+        if (!createChatButton) {
+            return;
+        }
+        const emptySelectedChat = document.querySelector(
+            '.empty-selected-chat',
         );
-        const deleteUserButton = this.children.find(
-            ch => ch.getName() === 'delete-user-button',
-        );
-        if (!createChatButton || !addUserButton || !deleteUserButton) return;
+        if (emptySelectedChat && this.props.selectedChat) {
+            (emptySelectedChat as HTMLDivElement).style.display = 'none';
+        }
         createChatButton.setProps({ onClick: this.createChat });
-        deleteUserButton.setProps({ onClick: this.deleteUser });
-        addUserButton.setProps({ onClick: this.addUser });
     }
 
     render(): string {
